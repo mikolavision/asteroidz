@@ -2,11 +2,40 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="fill_parent"
     android:layout_height="fill_parent"
-    android:orientation="vertical" >
+    android:orientation="vertical"
+    android:gravity="center" >
 
     <TextView
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="@string/hello" />
-
+        android:gravity="center"
+        android:textSize="45.0sp"
+        android:text="@string/Title" />
+    
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+     	android:layout_margin="75sp"
+	    android:orientation="horizontal"
+	    android:gravity="center" >
+	    <Button
+	        android:layout_height="wrap_content"
+	     	android:layout_width="wrap_content"
+	     	android:soundEffectsEnabled="true"
+	     	android:layout_marginRight="10sp"
+	     	android:width="150sp"
+	     	android:gravity="center"
+	        android:onClick="playGame"
+	        android:text="@string/playButton"/>
+	    <Button
+	        android:layout_height="wrap_content"
+	     	android:layout_width="wrap_content"
+	     	android:soundEffectsEnabled="true"
+	     	android:layout_marginLeft="10sp"
+	     	android:width="150sp"
+	     	android:gravity="center"
+	        android:onClick="exit"
+	        android:text="@string/exit"/>
+	</LinearLayout>
+	
 </LinearLayout>
