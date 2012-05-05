@@ -27,7 +27,7 @@ public class AsteroidzActivity extends Activity {
     
     public void playGame(View view){
     	// load game activity
-    	
+    	//poop
     	//Create a GLSurfaceView instance and set it
         //as the ContentView for this activity.
         gameGLView = new GameSurfaceView(this);
