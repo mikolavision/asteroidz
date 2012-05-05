@@ -1,14 +1,20 @@
 package com.asteroids.game;
 
+import com.asteroids.game.GameSurfaceView;
+
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 
 public class AsteroidzActivity extends Activity {
-    /** Called when the activity is first created. */
+    
+	private GLSurfaceView gameGLView;
+	
+	/** Called when the activity is first created. */
     @Override
     public void onCreate(Bundle savedInstanceState) {
     	super.onCreate(savedInstanceState);
@@ -21,6 +27,11 @@ public class AsteroidzActivity extends Activity {
     
     public void playGame(View view){
     	// load game activity
+    	
+    	//Create a GLSurfaceView instance and set it
+        //as the ContentView for this activity.
+        gameGLView = new GameSurfaceView(this);
+        setContentView(gameGLView);
     }
     
     public void exit(View view){
