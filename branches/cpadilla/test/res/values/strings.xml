@@ -1,9 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<resources>
-
-    <string name="Title">Asteroids!</string>
-    <string name="app_name">Asteroidz</string>
-    <string name="playButton">Play</string>
-    <string name="exit">Exit</string>
-
-</resources>
