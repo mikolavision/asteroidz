@@ -37,6 +37,7 @@ public class GameSurfaceView extends GLSurfaceView{
 			mAccelY = event.values[1];
 			
 			mRenderer.mAngle += (mAccelY) * ROTATE_SCALE_SPEED;
+			mRenderer.thrust += (mAccelX) * 0.5;
 			requestRender();
 		}
 		
@@ -48,16 +49,11 @@ public class GameSurfaceView extends GLSurfaceView{
 	public GameSurfaceView(Context context, Activity activity) {
 		super(context);
 
-		// setup accelerometer sensor manager
+    
+	    // register the accelerometer so we can retrieve values
 	    sensorManager = (SensorManager) activity.getSystemService("sensor");
 	    sensorManager.registerListener(accelerometerSensor, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
 	    
-	    
-	    // register the accelerometer so we can retrieve values
-	    // SENSOR_DELAY_GAME is the recommended rate for games
-	    //sensorManager.registerListener((SensorListener) accelerometerSensor, SensorManager.SENSOR_ACCELEROMETER, SensorManager.SENSOR_DELAY_GAME);
-	    //sensorManager.registerListener(accelerometerSensor, accelerometer, SensorManager.SENSOR_DELAY_GAME);
-		
 		mRenderer = new GameRenderer();
 		setRenderer(mRenderer);
 		

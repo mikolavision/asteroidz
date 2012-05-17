@@ -12,6 +12,7 @@ import android.os.SystemClock;
 public class GameRenderer implements Renderer {
 
 	public float mAngle;
+	public float thrust;
 	
 	private FloatBuffer triangleVB;
 	
@@ -38,13 +39,10 @@ public class GameRenderer implements Renderer {
 		//When using GL_MODELVIEW, you must set the view point
 		GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 		
-		//Create a rotation for the triangle
-//		long time = SystemClock.uptimeMillis() % 4000L;
-//		float angle = 0.090f * ((int) time);
-//		gl.glRotatef(angle, 0.0f, 0.0f, 1.0f);
-		
 		// Use the mAngle member as the rotation value
+		gl.glTranslatef(0.0f, thrust, 0.0f);
         gl.glRotatef(mAngle, 0.0f, 0.0f, 1.0f); 
+        
 		
 		//Draw the triangle
 		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
