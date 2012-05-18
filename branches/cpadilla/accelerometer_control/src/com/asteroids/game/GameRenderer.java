@@ -40,7 +40,7 @@ public class GameRenderer implements Renderer {
 		GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 		
 		// Use the mAngle member as the rotation value
-		gl.glTranslatef(0.0f, thrust, 0.0f);
+		gl.glTranslatef(0.0f, -thrust, 0.0f);
         gl.glRotatef(mAngle, 0.0f, 0.0f, 1.0f); 
         
 		
