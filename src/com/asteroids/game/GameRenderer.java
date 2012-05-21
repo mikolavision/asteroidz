@@ -8,9 +8,13 @@ import javax.microedition.khronos.opengles.GL10;
 import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
 import android.os.SystemClock;
+import android.view.Display;
 
 public class GameRenderer implements Renderer {
 
+	private float SCREEN_WIDTH = 3.5f;
+	private float SCREEN_HEIGHT = 2.5f;
+	
 	public float mAngle;
 	public float thrustX, thrustY;
 	public float posX, posY;
@@ -26,6 +30,8 @@ public class GameRenderer implements Renderer {
 		initShapes();
 		
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		
+		
 	}
 	
 	@Override
@@ -66,6 +72,14 @@ public class GameRenderer implements Renderer {
 		
 		posY += thrustY;
 		posX += thrustX;
+		
+		//Flip the sip to the opposite side if it goes off-screen
+		if(Math.abs(posX) >= SCREEN_WIDTH)
+			posX = -posX;
+		
+		if(Math.abs(posY) >= SCREEN_HEIGHT)
+			posY = -posY;
+		System.out.printf("PosX: %f\n posY: %f\n", posX, posY);
 	}
 
 	@Override

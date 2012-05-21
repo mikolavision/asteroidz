@@ -36,7 +36,7 @@ public class GameSurfaceView extends GLSurfaceView{
 			mAccelX = event.values[0];
 			mAccelY = event.values[1];
 			
-			mRenderer.mAngle += (mAccelY) * ROTATE_SCALE_SPEED;
+			mRenderer.mAngle = 45;
 			requestRender();
 		}
 		
