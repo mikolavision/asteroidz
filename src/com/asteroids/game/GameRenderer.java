@@ -12,7 +12,9 @@ import android.os.SystemClock;
 public class GameRenderer implements Renderer {
 
 	public float mAngle;
-	public float thrust;
+	public float thrustX, thrustY;
+	public float posX, posY;
+	public boolean isPressed = false;
 	
 	private FloatBuffer triangleVB;
 	
@@ -40,7 +42,8 @@ public class GameRenderer implements Renderer {
 		GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 		
 		// Use the mAngle member as the rotation value
-		gl.glTranslatef(0.0f, -thrust, 0.0f);
+		findPosition();
+		gl.glTranslatef(posX, -posY, 0.0f);
         gl.glRotatef(mAngle, 0.0f, 0.0f, 1.0f); 
         
 		
@@ -49,6 +52,16 @@ public class GameRenderer implements Renderer {
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, triangleVB);
 		gl.glDrawArrays(GL10.GL_TRIANGLES, 0, 3);
 		
+	}
+	
+	public void findPosition()
+	{
+		if(isPressed)
+		{
+			thrustY += 0.05;
+		}
+		
+		posY += thrustY;
 	}
 
 	@Override
