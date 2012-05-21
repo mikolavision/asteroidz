@@ -96,6 +96,7 @@ public class GameSurfaceView extends GLSurfaceView{
         mPreviousX = x;
         mPreviousY = y; */
 		
+		//check to see if the user has a finger on the screen
 		switch (e.getAction()) {
         case MotionEvent.ACTION_DOWN:
         	mRenderer.isPressed = true;
