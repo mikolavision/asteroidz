@@ -30,7 +30,7 @@ public class AsteroidzActivity extends Activity {
     	
     	//Create a GLSurfaceView instance and set it
         //as the ContentView for this activity.
-        gameGLView = new GameSurfaceView(this);
+        gameGLView = new GameSurfaceView( getApplicationContext(), this );
         setContentView(gameGLView);
     }
     
