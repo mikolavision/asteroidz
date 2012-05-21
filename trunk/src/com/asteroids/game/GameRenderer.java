@@ -43,9 +43,9 @@ public class GameRenderer implements Renderer {
 		
 		// Use the mAngle member as the rotation value
 		findPosition();
-		gl.glTranslatef(posX, -posY, 0.0f);
+		gl.glTranslatef(posX, posY, 0.0f);
         gl.glRotatef(mAngle, 0.0f, 0.0f, 1.0f); 
-        
+        System.out.printf("Angle: %f\n ThrustX: %f\n ThrustY: %f\n", mAngle, thrustX, thrustY);
 		
 		//Draw the triangle
 		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
@@ -56,12 +56,16 @@ public class GameRenderer implements Renderer {
 	
 	public void findPosition()
 	{
+		//find the position of the ship based on velocity and acceleration
 		if(isPressed)
 		{
-			thrustY += 0.05;
+			//convert polar coordinates to Cartesian 
+			thrustY += .01*Math.cos(mAngle*Math.PI/180);
+			thrustX += -.01*Math.sin(mAngle*Math.PI/180);
 		}
 		
 		posY += thrustY;
+		posX += thrustX;
 	}
 
 	@Override
