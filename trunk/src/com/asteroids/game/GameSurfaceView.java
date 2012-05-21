@@ -37,7 +37,6 @@ public class GameSurfaceView extends GLSurfaceView{
 			mAccelY = event.values[1];
 			
 			mRenderer.mAngle += (mAccelY) * ROTATE_SCALE_SPEED;
-			mRenderer.thrust += (mAccelX) * 0.005;
 			requestRender();
 		}
 		
@@ -70,7 +69,8 @@ public class GameSurfaceView extends GLSurfaceView{
         // and other input controls. In this case, you are only
         // interested in events where the touch position changed.
 		
-		float x = e.getX();
+		/* this code is not used anymore
+		 * float x = e.getX();
         float y = e.getY();
         System.out.println("TOUCH");
         switch (e.getAction()) {
@@ -94,7 +94,19 @@ public class GameSurfaceView extends GLSurfaceView{
     	}
 
         mPreviousX = x;
-        mPreviousY = y;
+        mPreviousY = y; */
+		
+		switch (e.getAction()) {
+        case MotionEvent.ACTION_DOWN:
+        	mRenderer.isPressed = true;
+        	break;
+        
+        case MotionEvent.ACTION_UP:
+        	mRenderer.isPressed = false;
+        	break;
+		}
+		
+		
 		return true;
 	}
 
