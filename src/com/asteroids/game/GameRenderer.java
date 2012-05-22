@@ -7,20 +7,21 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
-import android.os.SystemClock;
-import android.view.Display;
 
 public class GameRenderer implements Renderer {
 
-	private float SCREEN_WIDTH = 3.5f;
-	private float SCREEN_HEIGHT = 2.5f;
+	private float SPEED = 0.5f;
+	private float MAX_SPEED = 1;
 	
+	public float SCREEN_WIDTH = 3.5f;
+	public float SCREEN_HEIGHT = 2.5f;
 	public float mAngle;
 	public float thrustX, thrustY;
 	public float posX, posY;
 	public boolean isPressed = false;
 	
 	private FloatBuffer triangleVB;
+	private FloatBuffer starVB;
 	
 	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
@@ -60,9 +61,7 @@ public class GameRenderer implements Renderer {
 		//Draw the triangle
 		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, triangleVB);
-		gl.glDrawArrays(GL10.GL_LINE_LOOP, 0, 4);
-		
-	
+		gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, 5);
 		
 	}
 	
@@ -76,9 +75,9 @@ public class GameRenderer implements Renderer {
 			thrustX += -.01*Math.sin(mAngle*Math.PI/180);
 		}
 		
-		posY += thrustY;
-		posX += thrustX;
-		
+		posY += thrustY * SPEED;
+		posX += thrustX * SPEED;
+			
 		//Flip the sip to the opposite side if it goes off-screen
 		if(Math.abs(posX) >= SCREEN_WIDTH)
 			posX = -posX;
@@ -103,10 +102,11 @@ public class GameRenderer implements Renderer {
 	    
         float triangleCoords[] = {
             // X, Y, Z
-            -0.2f, -0.25f, 0,
-             0.0f, -0.1f, 0,
-             0.2f, -0.25f, 0,
-             0.0f,  0.259016994f, 0
+            -0.5f/3f, -0.25f/2, 0,
+             0.0f,  0.559016994f/2, 0,
+             0.5f/3f, -0.25f/2, 0,
+             0.0f, -0.0f, 0,
+            -0.5f/3f, -0.25f/2, 0
         }; 
         
         // initialize vertex Buffer for triangle  
@@ -117,7 +117,7 @@ public class GameRenderer implements Renderer {
         triangleVB = vbb.asFloatBuffer();  // create a floating point buffer from the ByteBuffer
         triangleVB.put(triangleCoords);    // add the coordinates to the FloatBuffer
         triangleVB.position(0);            // set the buffer to read the first coordinate
-    
+        
     }
 
 }
