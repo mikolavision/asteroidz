@@ -36,6 +36,10 @@ public class GameRenderer implements Renderer {
 	
 	@Override
 	public void onDrawFrame(GL10 gl) {
+		
+		//Since we are in 2D there is no need for depth
+		gl.glDisable(GL10.GL_DEPTH_TEST);
+		
 		// Redraw background color
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
 		gl.glClearColor(0, 0, 0, 0);
@@ -57,6 +61,8 @@ public class GameRenderer implements Renderer {
 		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, triangleVB);
 		gl.glDrawArrays(GL10.GL_TRIANGLES, 0, 3);
+		
+	
 		
 	}
 	
