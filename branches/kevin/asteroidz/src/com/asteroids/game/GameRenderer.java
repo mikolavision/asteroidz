@@ -15,7 +15,7 @@ public class GameRenderer implements Renderer {
 	
 	public float SCREEN_WIDTH = 3.5f;
 	public float SCREEN_HEIGHT = 2.5f;
-	public float mAngle;
+	public float mAngle, orientation;
 	public float thrustX, thrustY;
 	public float posX, posY;
 	public boolean isPressed = false;
@@ -71,10 +71,16 @@ public class GameRenderer implements Renderer {
 		if(isPressed)
 		{
 			//convert polar coordinates to Cartesian 
-			thrustY += .01*Math.cos(mAngle*Math.PI/180);
-			thrustX += -.01*Math.sin(mAngle*Math.PI/180);
+			thrustY += .007*Math.cos(mAngle*Math.PI/180);
+			thrustX += -.007*Math.sin(mAngle*Math.PI/180);
+			orientation = mAngle;
+			
 		}
 		
+		//Slow down the ship
+		thrustY = thrustY/1.01f;
+		thrustX = thrustX/1.01f;
+				
 		posY += thrustY * SPEED;
 		posX += thrustX * SPEED;
 			
