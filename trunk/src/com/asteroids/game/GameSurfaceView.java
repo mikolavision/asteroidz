@@ -5,38 +5,30 @@ import android.content.Context;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
-import android.hardware.SensorListener;
 import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
-import android.view.accessibility.AccessibilityEventSource;
 
 public class GameSurfaceView extends GLSurfaceView{
 
-    private final float TOUCH_SCALE_FACTOR = 180.0f / 320;
     private float ROTATE_SCALE_SPEED = 1.5f;
     private GameRenderer mRenderer;
-    private float mPreviousX;
-    private float mPreviousY;
+
     
     // sensor manager used to control the accelerometer sensor.
     private SensorManager sensorManager;
     // accelerometer sensor values.
     private float mAccelX = 0;
     private float mAccelY = 0;
-    private Sensor accelerometer;
     
     private final SensorEventListener accelerometerSensor = new SensorEventListener() {
 		
 		public void onSensorChanged(SensorEvent event) {
-			System.out.printf("Movement! X: %f Y: %f Z:%f\n", event.values[0],
-															  event.values[1],
-															  event.values[2]);
 			mAccelX = event.values[0];
 			mAccelY = event.values[1];
 			
-			mRenderer.mAngle = 45;
+			mRenderer.mAngle += mAccelY * ROTATE_SCALE_SPEED;
 			requestRender();
 		}
 		
@@ -52,6 +44,10 @@ public class GameSurfaceView extends GLSurfaceView{
 	    // register the accelerometer so we can retrieve values
 	    sensorManager = (SensorManager) activity.getSystemService("sensor");
 	    sensorManager.registerListener(accelerometerSensor, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
+	    
+	    //Display display = activity.getWindowManager().getDefaultDisplay();
+	    //mRenderer.SCREEN_HEIGHT = display.getWidth();
+	    //mRenderer.SCREEN_WIDTH = display.getHeight();
 	    
 		mRenderer = new GameRenderer();
 		setRenderer(mRenderer);
