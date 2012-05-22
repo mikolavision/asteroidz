@@ -60,7 +60,7 @@ public class GameRenderer implements Renderer {
 		//Draw the triangle
 		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, triangleVB);
-		gl.glDrawArrays(GL10.GL_LINE_LOOP, 0, 3);
+		gl.glDrawArrays(GL10.GL_LINE_LOOP, 0, 4);
 		
 	
 		
@@ -103,9 +103,10 @@ public class GameRenderer implements Renderer {
 	    
         float triangleCoords[] = {
             // X, Y, Z
-            -0.5f, -0.25f, 0,
-             0.5f, -0.25f, 0,
-             0.0f,  0.559016994f, 0
+            -0.2f, -0.25f, 0,
+             0.0f, -0.1f, 0,
+             0.2f, -0.25f, 0,
+             0.0f,  0.259016994f, 0
         }; 
         
         // initialize vertex Buffer for triangle  
