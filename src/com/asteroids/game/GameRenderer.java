@@ -60,7 +60,7 @@ public class GameRenderer implements Renderer {
 		//Draw the triangle
 		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, triangleVB);
-		gl.glDrawArrays(GL10.GL_TRIANGLES, 0, 3);
+		gl.glDrawArrays(GL10.GL_LINE_LOOP, 0, 3);
 		
 	
 		
