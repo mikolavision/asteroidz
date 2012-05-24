@@ -4,8 +4,10 @@ import com.asteroids.game.GameSurfaceView;
 
 import android.app.Activity;
 import android.content.pm.ActivityInfo;
+import android.graphics.Point;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
+import android.view.Display;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -30,7 +32,10 @@ public class AsteroidzActivity extends Activity {
     	
     	//Create a GLSurfaceView instance and set it
         //as the ContentView for this activity.
-        gameGLView = new GameSurfaceView( getApplicationContext(), this );
+    	Point size = new Point();
+    	size.x = this.getWindowManager().getDefaultDisplay().getHeight();
+    	size.y = this.getWindowManager().getDefaultDisplay().getWidth();
+        gameGLView = new GameSurfaceView( getApplicationContext(), this , size);
         setContentView(gameGLView);
     }
     

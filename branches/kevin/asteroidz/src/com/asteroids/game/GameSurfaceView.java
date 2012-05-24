@@ -2,11 +2,13 @@ package com.asteroids.game;
 
 import android.app.Activity;
 import android.content.Context;
+import android.graphics.Point;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.opengl.GLSurfaceView;
+import android.view.Display;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
 
@@ -37,7 +39,7 @@ public class GameSurfaceView extends GLSurfaceView{
 		}
 	};
     
-	public GameSurfaceView(Context context, Activity activity) {
+	public GameSurfaceView(Context context, Activity activity, Point size) {
 		super(context);
 
     
@@ -45,9 +47,8 @@ public class GameSurfaceView extends GLSurfaceView{
 	    sensorManager = (SensorManager) activity.getSystemService("sensor");
 	    sensorManager.registerListener(accelerometerSensor, sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER), SensorManager.SENSOR_DELAY_GAME);
 	    
-	    //Display display = activity.getWindowManager().getDefaultDisplay();
-	    //mRenderer.SCREEN_HEIGHT = display.getWidth();
-	    //mRenderer.SCREEN_WIDTH = display.getHeight();
+	   //mRenderer.SCREEN_WIDTH = size.y;
+	   //mRenderer.SCREEN_HEIGHT = size.x;
 	    
 		mRenderer = new GameRenderer();
 		setRenderer(mRenderer);
