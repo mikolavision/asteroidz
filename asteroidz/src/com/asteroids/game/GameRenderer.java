@@ -7,6 +7,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
+import android.view.Display;
 
 public class GameRenderer implements Renderer {
 
@@ -31,6 +32,7 @@ public class GameRenderer implements Renderer {
 		initShapes();
 		
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
+		
 		
 		
 	}
