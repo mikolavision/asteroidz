@@ -30,13 +30,19 @@ public class GameRenderer implements Renderer {
 		gl.glClearColor(0f, 0f, 0f, 1.0f);
 
 		initShapes();
+		intitialize();
 		
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		
-		test_line = new Ship();
 		
 	}
 	
+	public void intitialize() {
+
+		test_line = new Ship();
+		
+	}
+
 	public void onDrawFrame(GL10 gl) {
 		
 		//Since we are in 2D there is no need for depth
