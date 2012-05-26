@@ -20,10 +20,11 @@ public class GameRenderer implements Renderer {
 	public float posX, posY;
 	public boolean isPressed = false;
 	
+	private Ship test_line;
+	
 	private FloatBuffer triangleVB;
 	private FloatBuffer starVB;
 	
-	@Override
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		//Set the background frame color
 		gl.glClearColor(0f, 0f, 0f, 1.0f);
@@ -32,10 +33,10 @@ public class GameRenderer implements Renderer {
 		
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		
+		test_line = new Ship();
 		
 	}
 	
-	@Override
 	public void onDrawFrame(GL10 gl) {
 		
 		//Since we are in 2D there is no need for depth
@@ -52,6 +53,9 @@ public class GameRenderer implements Renderer {
 		//When using GL_MODELVIEW, you must set the view point
 		GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 		
+		test_line.glDraw(gl);
+		
+		
 		// Use the mAngle member as the rotation value
 		findPosition();
 		gl.glTranslatef(posX, posY, 0.0f);
@@ -62,6 +66,7 @@ public class GameRenderer implements Renderer {
 		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, triangleVB);
 		gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, 5);
+		
 		
 	}
 	
@@ -87,7 +92,6 @@ public class GameRenderer implements Renderer {
 		System.out.printf("PosX: %f\n posY: %f\n", posX, posY);
 	}
 
-	@Override
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		gl.glViewport(0, 0, width, height);
 		
