@@ -26,10 +26,10 @@ public class Ship extends Drawable implements Flyable{
 	public void update() {
 		
 		// Working on fixing issues with thrust
-		//position.x += thrust.x * SPEED;
-		//position.y += thrust.y * SPEED;
+		position.x += thrust.x * SPEED;
+		position.y += thrust.y * SPEED;
 		
-		//Flip the sip to the opposite side if it goes off-screen
+		//Flip the ship to the opposite side if it goes off-screen
 		if(Math.abs(position.x) >= GameRenderer.SCREEN_WIDTH)
 			position.x = -position.x;
 		
@@ -54,8 +54,8 @@ public class Ship extends Drawable implements Flyable{
 	}
 
 	public void move() {
-		thrust.x += .01*Math.cos(angle*Math.PI/180);
-    	thrust.y += -.01*Math.sin(angle*Math.PI/180);
+		thrust.x += -.01*Math.sin(angle*Math.PI/180);
+    	thrust.y += .01*Math.cos(angle*Math.PI/180);
 	}
 	
 }
