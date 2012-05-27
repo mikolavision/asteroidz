@@ -7,20 +7,21 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
+import android.view.MotionEvent;
 
 public class GameRenderer implements Renderer {
 
 	private float SPEED = 0.5f;
 	private float MAX_SPEED = 1;
 	
-	public float SCREEN_WIDTH = 3.5f;
-	public float SCREEN_HEIGHT = 2.5f;
+	public static float SCREEN_WIDTH = 3.5f;
+	public static float SCREEN_HEIGHT = 2.5f;
 	public float mAngle;
 	public float thrustX, thrustY;
 	public float posX, posY;
 	public boolean isPressed = false;
 	
-	private Ship test_line;
+	public Ship player;
 	
 	private FloatBuffer triangleVB;
 	private FloatBuffer starVB;
@@ -39,7 +40,7 @@ public class GameRenderer implements Renderer {
 	
 	public void intitialize() {
 
-		test_line = new Ship();
+		player = new Ship();
 		
 	}
 
@@ -59,21 +60,30 @@ public class GameRenderer implements Renderer {
 		//When using GL_MODELVIEW, you must set the view point
 		GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 		
-		test_line.glDraw(gl);
+		
+		// So far all the code we need to get the ship class working...
+		player.setAngle(mAngle);
+		player.update();
+		player.glDraw(gl);
 		
 		
 		// Use the mAngle member as the rotation value
 		findPosition();
+		
 		gl.glTranslatef(posX, posY, 0.0f);
         gl.glRotatef(mAngle, 0.0f, 0.0f, 1.0f); 
-        System.out.printf("Angle: %f\n ThrustX: %f\n ThrustY: %f\n", mAngle, thrustX, thrustY);
 		
 		//Draw the triangle
 		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, triangleVB);
 		gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, 5);
+		gl.glPopMatrix();
 		
-		
+	}
+	
+	public void onTouch(MotionEvent e){
+		// TODO: Implement isPressed like functionality
+		player.move();
 	}
 	
 	public void findPosition()
@@ -95,7 +105,6 @@ public class GameRenderer implements Renderer {
 		
 		if(Math.abs(posY) >= SCREEN_HEIGHT)
 			posY = -posY;
-		System.out.printf("PosX: %f\n posY: %f\n", posX, posY);
 	}
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
