@@ -63,13 +63,14 @@ public class GameRenderer implements Renderer {
 		
 		// So far all the code we need to get the ship class working...
 		player.setAngle(mAngle);
+		if(isPressed) player.move();
 		player.update();
 		player.glDraw(gl);
 		
 		
 		// Use the mAngle member as the rotation value
 		findPosition();
-		
+		gl.glPushMatrix();
 		gl.glTranslatef(posX, posY, 0.0f);
         gl.glRotatef(mAngle, 0.0f, 0.0f, 1.0f); 
 		
@@ -83,7 +84,7 @@ public class GameRenderer implements Renderer {
 	
 	public void onTouch(MotionEvent e){
 		// TODO: Implement isPressed like functionality
-		player.move();
+		//player.move();
 	}
 	
 	public void findPosition()
@@ -92,13 +93,14 @@ public class GameRenderer implements Renderer {
 		if(isPressed)
 		{
 			//convert polar coordinates to Cartesian 
-			thrustY += .01*Math.cos(mAngle*Math.PI/180);
-			thrustX += -.01*Math.sin(mAngle*Math.PI/180);
+			//thrustY += .01*Math.cos(mAngle*Math.PI/180);
+			//thrustX += -.01*Math.sin(mAngle*Math.PI/180);
+			
 		}
 		
 		//drag
-		thrustY = thrustY/10;
-		thrustX = thrustX/10;
+		thrustY = thrustY * 0.9f;
+		thrustX = thrustX * 0.9f;
 		
 		posY += thrustY * SPEED;
 		posX += thrustX * SPEED;

@@ -8,7 +8,7 @@ import android.graphics.Point;
 
 public class Ship extends Drawable implements Flyable{
 	
-	private float SPEED = 0.5f;
+	private float DRAG = 0.45f;
 
 	public Ship(){
 		super();
@@ -26,12 +26,12 @@ public class Ship extends Drawable implements Flyable{
 	public void update() {
 		
 		//drag
-		thrust.x = thrust.x/10;
-		thrust.y = thrust.y/10;
+		thrust.x = thrust.x;
+		thrust.y = thrust.y;
 		
 		//thrust
-		position.x += thrust.x * SPEED;
-		position.y += thrust.y * SPEED;
+		position.x += thrust.x * DRAG;
+		position.y += thrust.y * DRAG;
 		
 		//Flip the ship to the opposite side if it goes off-screen
 		if(Math.abs(position.x) >= GameRenderer.SCREEN_WIDTH)
@@ -40,6 +40,7 @@ public class Ship extends Drawable implements Flyable{
 		if(Math.abs(position.y) >= GameRenderer.SCREEN_HEIGHT)
 			position.y = -position.y;
 		
+		System.out.println("X: "+position.x+" Y: "+position.y);
 		
 	}
 
