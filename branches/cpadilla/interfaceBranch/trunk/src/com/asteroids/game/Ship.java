@@ -25,7 +25,11 @@ public class Ship extends Drawable implements Flyable{
 
 	public void update() {
 		
-		// Working on fixing issues with thrust
+		//drag
+		thrust.x = thrust.x/10;
+		thrust.y = thrust.y/10;
+		
+		//thrust
 		position.x += thrust.x * SPEED;
 		position.y += thrust.y * SPEED;
 		

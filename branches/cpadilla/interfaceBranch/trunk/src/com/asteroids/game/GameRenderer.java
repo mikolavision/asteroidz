@@ -96,6 +96,10 @@ public class GameRenderer implements Renderer {
 			thrustX += -.01*Math.sin(mAngle*Math.PI/180);
 		}
 		
+		//drag
+		thrustY = thrustY/10;
+		thrustX = thrustX/10;
+		
 		posY += thrustY * SPEED;
 		posX += thrustX * SPEED;
 			
