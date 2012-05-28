@@ -13,15 +13,13 @@ public abstract class Drawable {
 	private float coords[];
 	private FloatBuffer fbuffer;
 	private int DrawMode;
-	public Vector2f position;
+
 	protected float angle;
 	
 	public Drawable(){
 		initializeBuffer();
-		setDrawMode(GL10.GL_LINES);
-		position = new Vector2f();
-		position.x = 0;
-		position.y = 0;
+		setDrawMode(GL10.GL_LINE_STRIP);
+
 		angle = 0;
 	}
 	
@@ -81,11 +79,11 @@ public abstract class Drawable {
 		fbuffer = createBuffer(coords);
 	}
 	
-	public Vector2f getPosition(){
-		return position;
-	}
+	//public Vector2f getPosition(){
+	//	return position;
+	//}
 	
-	public void glDraw(GL10 gl){
+	public void glDraw(GL10 gl, Vector2f position){
 		gl.glPushMatrix();
 		
 		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);

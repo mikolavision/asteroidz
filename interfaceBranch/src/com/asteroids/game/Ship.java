@@ -9,25 +9,32 @@ import android.graphics.Point;
 public class Ship extends Drawable implements Flyable{
 	
 	private float SPEED = 0.5f;
-
+	public Vector2f position;
+	public Vector2f thrust = new Vector2f(0.00001f, 0.00001f);
+	
 	public Ship(){
 		super();
 		float coords[] = {
 	            // X, Y, Z
-	            -0.5f/3f, -0.25f/2, 0,
+				-0.5f/3f, -0.25f/2, 0,
 	             0.0f,  0.559016994f/2, 0,
 	             0.5f/3f, -0.25f/2, 0,
+	             0.0f, -0.0f, 0,
 	            -0.5f/3f, -0.25f/2, 0
 	        };
 		setCoords(coords);
 		setDrawMode(GL10.GL_LINE_STRIP);
+		
+		position = new Vector2f();
+		position.x = 0;
+		position.y = 0;
 	}
 
 	public void update() {
 		
-		//drag
-		thrust.x = thrust.x/10;
-		thrust.y = thrust.y/10;
+		//drag is commented out so i can tell if the ship is moving on my emulator
+		//thrust.x = thrust.x/10;
+		//thrust.y = thrust.y/10;
 		
 		//thrust
 		position.x += thrust.x * SPEED;
@@ -60,6 +67,11 @@ public class Ship extends Drawable implements Flyable{
 	public void move() {
 		thrust.x += -.01*Math.sin(angle*Math.PI/180);
     	thrust.y += .01*Math.cos(angle*Math.PI/180);
+	}
+	
+	public Vector2f getPosition()
+	{
+		return position;
 	}
 	
 }
