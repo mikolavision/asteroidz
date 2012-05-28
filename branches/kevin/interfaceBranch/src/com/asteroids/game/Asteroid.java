@@ -8,6 +8,7 @@ public class Asteroid extends Drawable implements Flyable {
 	
 	public Vector2f position;
 	public Vector2f thrust = new Vector2f(0.00001f, 0.00001f);
+	protected float angle;
 	
 	public Asteroid(){
 		super();
@@ -28,6 +29,8 @@ public class Asteroid extends Drawable implements Flyable {
 			
 		thrust.y = (float) ((2*Math.random()-1)/10);
 		thrust.x = (float) ((2*Math.random()-1)/10);
+		
+		angle = 0;
 	}
 	
 	@Override
@@ -35,6 +38,9 @@ public class Asteroid extends Drawable implements Flyable {
 		//thrust
 		position.x += thrust.x;
 		position.y += thrust.y; 
+		
+		//slowly rotate the asteroid
+		angle = (float) (angle - Math.PI/16);
 		
 		//Flip the ship to the opposite side if it goes off-screen
 		if(Math.abs(position.x) >= GameRenderer.SCREEN_WIDTH)
@@ -60,6 +66,10 @@ public class Asteroid extends Drawable implements Flyable {
 	public Vector2f getPosition()
 	{
 		return position;
+	}
+	
+	public float getAngle(){
+		return angle;
 	}
 
 }

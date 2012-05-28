@@ -11,6 +11,7 @@ public class Ship extends Drawable implements Flyable{
 	private float SPEED = 0.5f;
 	public Vector2f position;
 	public Vector2f thrust = new Vector2f(0.00001f, 0.00001f);
+	protected float angle;
 	
 	public Ship(){
 		super();
@@ -28,6 +29,8 @@ public class Ship extends Drawable implements Flyable{
 		position = new Vector2f();
 		position.x = 0;
 		position.y = 0;
+		
+		angle = 0;
 	}
 
 	public void update() {
@@ -52,6 +55,10 @@ public class Ship extends Drawable implements Flyable{
 
 	public void setAngle(float angle){
 		this.angle = (float) (angle -Math.PI / 2);
+	}
+	
+	public float getAngle(){
+		return angle;
 	}
 	
 	public boolean collidesWith(Flyable obj) {

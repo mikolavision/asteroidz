@@ -73,13 +73,13 @@ public class GameRenderer implements Renderer {
 		// So far all the code we need to get the ship class working...
 		player.setAngle(mAngle);
 		player.update();
-		player.glDraw(gl, player.getPosition());
+		player.glDraw(gl, player.getPosition(), player.getAngle());
 		
 		//update the asteroids
 		for(Asteroid asteroid : asteroids)
 		{
 			asteroid.update();
-			asteroid.glDraw(gl, asteroid.getPosition());
+			asteroid.glDraw(gl, asteroid.getPosition(), asteroid.getAngle());
 		}
 	
 	}
