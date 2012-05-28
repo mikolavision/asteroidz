@@ -24,6 +24,7 @@ public class GameRenderer implements Renderer {
 	public static boolean isPressed = false;
 	
 	public Ship player;
+	public Bullet bullet;
 	public ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); 
 	
 	private FloatBuffer triangleVB;
@@ -45,6 +46,7 @@ public class GameRenderer implements Renderer {
 
 		//create the player
 		player = new Ship();
+		bullet = new Bullet();
 		
 		//create a list of asteroids
 		for(int i=0; i < numAsteroids; i++)
@@ -74,6 +76,8 @@ public class GameRenderer implements Renderer {
 		player.setAngle(mAngle);
 		player.update();
 		player.glDraw(gl, player.getPosition(), player.getAngle());
+		
+		bullet.glDraw(gl, bullet.getPosition(), bullet.getAngle());
 		
 		//update the asteroids
 		for(Asteroid asteroid : asteroids)

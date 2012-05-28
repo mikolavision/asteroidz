@@ -66,9 +66,16 @@ public class GameSurfaceView extends GLSurfaceView{
         // interested in events where the touch position changed.
 		
 		//check to see if the user has a finger on the screen
+		 float x = e.getX();
+	     float y = e.getY();
+	     
+	     System.out.println("TOUCH");
+	     
+	     
 		switch (e.getAction()) {
         case MotionEvent.ACTION_DOWN:
                 mRenderer.isPressed = true;
+
                 break;
         
         case MotionEvent.ACTION_UP:
