@@ -1,6 +1,7 @@
 package com.asteroids.game;
 
 import java.nio.*;
+import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
@@ -16,12 +17,14 @@ public class GameRenderer implements Renderer {
 	
 	public static float SCREEN_WIDTH = 3.5f;
 	public static float SCREEN_HEIGHT = 2.5f;
+	public static int numAsteroids = 3;
 	public float mAngle;
 	public float thrustX, thrustY;
 	public float posX, posY;
 	public boolean isPressed = false;
 	
 	public Ship player;
+	public ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); 
 	
 	private FloatBuffer triangleVB;
 	private FloatBuffer starVB;
@@ -40,14 +43,20 @@ public class GameRenderer implements Renderer {
 	
 	public void intitialize() {
 
+		//create the player
 		player = new Ship();
+		
+		//create a list of asteroids
+		for(int i=0; i < numAsteroids; i++)
+		{
+			asteroids.add(new Asteroid());
+		}
 		
 	}
 
 	public void onDrawFrame(GL10 gl) {
 		
-		//Since we are in 2D there is no need for depth
-		gl.glDisable(GL10.GL_DEPTH_TEST);
+	
 		
 		// Redraw background color
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
@@ -64,21 +73,15 @@ public class GameRenderer implements Renderer {
 		// So far all the code we need to get the ship class working...
 		player.setAngle(mAngle);
 		player.update();
-		player.glDraw(gl);
+		player.glDraw(gl, player.getPosition());
 		
-		
-		// Use the mAngle member as the rotation value
-		findPosition();
-		
-		gl.glTranslatef(posX, posY, 0.0f);
-        gl.glRotatef(mAngle, 0.0f, 0.0f, 1.0f); 
-		
-		//Draw the triangle
-		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
-		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, triangleVB);
-		gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, 5);
-		gl.glPopMatrix();
-		
+		//update the asteroids
+		for(Asteroid asteroid : asteroids)
+		{
+			asteroid.update();
+			asteroid.glDraw(gl, asteroid.getPosition());
+		}
+	
 	}
 	
 	public void onTouch(MotionEvent e){

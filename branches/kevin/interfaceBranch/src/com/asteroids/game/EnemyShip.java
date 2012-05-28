@@ -36,4 +36,10 @@ public class EnemyShip extends Drawable implements Flyable, Shootable {
 		
 	}
 
+	@Override
+	public Vector2f getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

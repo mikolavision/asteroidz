@@ -20,4 +20,10 @@ public class Bullet extends Drawable implements Flyable {
 		
 	}
 
+	@Override
+	public Vector2f getPosition() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }
