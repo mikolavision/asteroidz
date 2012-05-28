@@ -77,7 +77,7 @@ public class GameSurfaceView extends GLSurfaceView{
                 }
 		
 		// pass the event on to the render
-		mRenderer.onTouch(e);
+		//mRenderer.onTouch(e);
 		
 		return true;
 	}
