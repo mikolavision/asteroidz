@@ -21,7 +21,7 @@ public class GameRenderer implements Renderer {
 	public float mAngle;
 	public float thrustX, thrustY;
 	public float posX, posY;
-	public boolean isPressed = false;
+	public static boolean isPressed = false;
 	
 	public Ship player;
 	public ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); 

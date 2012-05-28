@@ -40,6 +40,11 @@ public class Ship extends Drawable implements Flyable{
 		//thrust.y = thrust.y/10;
 		
 		//thrust
+		if(GameRenderer.isPressed)
+		{
+			move();
+		}
+		
 		position.x += thrust.x * SPEED;
 		position.y += thrust.y * SPEED;
 		
@@ -74,6 +79,7 @@ public class Ship extends Drawable implements Flyable{
 	public void move() {
 		thrust.x += -.01*Math.sin(angle*Math.PI/180);
     	thrust.y += .01*Math.cos(angle*Math.PI/180);
+    	System.out.printf("thrusted\n");
 	}
 	
 	public Vector2f getPosition()
