@@ -66,25 +66,34 @@ public class GameSurfaceView extends GLSurfaceView{
         // interested in events where the touch position changed.
 		
 		//check to see if the user has a finger on the screen
+		
 		 float x = e.getX();
 	     float y = e.getY();
 	     
-	     System.out.println("TOUCH");
+	     System.out.println("x =" + x + " y = " + y);
 	     
-	     
-		switch (e.getAction()) {
-        case MotionEvent.ACTION_DOWN:
-                mRenderer.isPressed = true;
-
-                break;
-        
-        case MotionEvent.ACTION_UP:
-                mRenderer.isPressed = false;
-                break;
-                }
-		
-		// pass the event on to the render
-		//mRenderer.onTouch(e);
+	     if(x < 400)
+	     {
+	    	 //If the user touches the left side of the screen shoot bullets
+	     }
+	     else
+	    	 if(x > 400)
+	    	 {
+	    		 //touching the right side of the screen adds thrust
+	    		 switch (e.getAction()) {
+	    		 	case MotionEvent.ACTION_DOWN:
+	                mRenderer.isPressed = true;
+	                break;
+	        
+	    		 	case MotionEvent.ACTION_UP:
+	                mRenderer.isPressed = false;
+	                break;
+	                }
+			
+			// pass the event on to the render
+			//mRenderer.onTouch(e);
+	    	 }
+			
 		
 		return true;
 	}
