@@ -80,6 +80,7 @@ public class Ship extends Drawable implements Flyable, Shootable{
 	public void move() {
 		thrust.x += -.01*Math.sin(angle*Math.PI/180);
     	thrust.y += .01*Math.cos(angle*Math.PI/180);
+    	System.out.println("thrust on");
 
 	}
 	
