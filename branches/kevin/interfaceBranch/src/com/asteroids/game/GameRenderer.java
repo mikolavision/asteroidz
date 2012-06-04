@@ -78,8 +78,11 @@ public class GameRenderer implements Renderer {
 		//update the asteroids
 		for(Asteroid asteroid : asteroids)
 		{
-			asteroid.update();
-			asteroid.glDraw(gl, asteroid.getPosition(), asteroid.getAngle());
+			if(asteroid.active)
+			{
+				asteroid.update();
+				asteroid.glDraw(gl, asteroid.getPosition(), asteroid.getAngle());
+			}
 		}
 		
 		//update the active bullets
@@ -88,6 +91,15 @@ public class GameRenderer implements Renderer {
 			if(bullet.active)
 			{
 				bullet.update();
+				
+				//check for collisions between the bullets and asteroids
+				for(Asteroid asteroid : asteroids)
+					if(bullet.collidesWith(asteroid))
+					{
+						bullet.active = false;
+						asteroid.active = false;
+					}
+				
 				bullet.glDraw(gl, bullet.position, bullet.getAngle());	
 			}
 		}

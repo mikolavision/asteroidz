@@ -12,6 +12,8 @@ public class Asteroid extends Drawable implements Flyable {
 	public Vector2f thrust = new Vector2f(0.00001f, 0.00001f);
 	protected float angle;
 	protected Random random = new Random();
+	public float radius = 0.3f;
+	public boolean active = true; 
 	
 	public Asteroid(){
 		super();
@@ -73,6 +75,7 @@ public class Asteroid extends Drawable implements Flyable {
 		// TODO Auto-generated method stub
 		return false;
 	}
+	
 
 	@Override
 	public void explode() {

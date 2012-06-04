@@ -7,7 +7,6 @@ import android.graphics.Point;
 public interface Flyable {
 
 
-	
 	public void update();
 	
 	public boolean collidesWith(Flyable obj);

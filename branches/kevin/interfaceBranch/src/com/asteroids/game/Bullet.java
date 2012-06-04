@@ -10,6 +10,7 @@ public class Bullet extends Drawable implements Flyable {
 	public boolean active = true;
 	private float SPEED = 5.0f;
 	public long startTime;
+	public float radius = 0.1f;
 	
 	public Bullet(float x, float y, float bAngle){
 		super();
@@ -49,10 +50,7 @@ public class Bullet extends Drawable implements Flyable {
 			position.x = -position.x;
 		
 		if(Math.abs(position.y) >= GameRenderer.SCREEN_HEIGHT)
-			position.y = -position.y;
-		
-		
-		
+			position.y = -position.y;	
 		
 	}
 	
@@ -62,11 +60,17 @@ public class Bullet extends Drawable implements Flyable {
     	thrust.y = (float) (.01*Math.cos(angle*Math.PI/180));
 	}
 
-	@Override
-	public boolean collidesWith(Flyable obj) {
-		// TODO Auto-generated method stub
-		return false;
+	//implement circle collisions
+	public boolean collidesWith(Asteroid obj) {
+		
+		float distance = (float) Math.sqrt(Math.pow(position.x - obj.position.x, 2) + Math.pow(position.y - obj.position.y, 2));
+		if(distance <= (radius+ obj.radius))
+			return true;
+		else
+			return false;
 	}
+	
+
 
 	@Override
 	public void explode() {
@@ -82,6 +86,13 @@ public class Bullet extends Drawable implements Flyable {
 	
 	public float getAngle(){
 		return angle;
+	}
+
+
+	@Override
+	public boolean collidesWith(Flyable obj) {
+		// TODO Auto-generated method stub
+		return false;
 	}
 
 }
