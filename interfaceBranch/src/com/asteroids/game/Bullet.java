@@ -31,7 +31,7 @@ public class Bullet extends Drawable implements Flyable {
 	@Override
 	public void update() {
 		//thrust
-		//position.x += thrust.x * SPEED;
+		position.x += thrust.x * SPEED;
 		position.y += thrust.y * SPEED; 
 		
 		//Flip the bullet to the opposite side if it goes off-screen
@@ -47,6 +47,7 @@ public class Bullet extends Drawable implements Flyable {
 	{
 		thrust.x += -.01*Math.sin(angle*Math.PI/180);
     	thrust.y += .01*Math.cos(angle*Math.PI/180);
+    	System.out.println("thrust x = " + thrust.x);
 	}
 
 	@Override
