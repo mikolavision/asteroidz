@@ -94,4 +94,18 @@ public abstract class Drawable {
 	
 	}
 	
+	public void glDraw(GL10 gl, float x, float y, float angle){
+		gl.glPushMatrix();
+		
+		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
+		gl.glTranslatef(x, y, 0.0f);
+		gl.glRotatef(angle, 0, 0, 1);
+		FloatBuffer vb = getBuffer();
+		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vb);
+		gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, getBufferSize());
+		
+		gl.glPopMatrix();
+	
+	}
+	
 }
