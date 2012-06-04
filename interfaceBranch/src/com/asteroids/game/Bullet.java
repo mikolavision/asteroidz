@@ -4,11 +4,12 @@ import javax.microedition.khronos.opengles.GL10;
 
 public class Bullet extends Drawable implements Flyable {
 
-	public Vector2f position; 
+	public static Vector2f position; 
 	public Vector2f thrust = new Vector2f(0.00001f, 0.00001f);
 	protected float angle;
 	public boolean active = true;
 	private float SPEED = 5.0f;
+	public long startTime;
 	
 	public Bullet(float x, float y, float bAngle){
 		super();
@@ -21,15 +22,23 @@ public class Bullet extends Drawable implements Flyable {
 		setDrawMode(GL10.GL_LINE_STRIP);
 
 		position = new Vector2f(x, y);
-		
 		angle = (float) (bAngle - Math.PI/2);
-		
 		setThrust();
+		
+		startTime = System.currentTimeMillis();
 	}
 		
 	
 	@Override
 	public void update() {
+		
+		//check whether to make the bullet inactive
+		long currentTime = System.currentTimeMillis();
+		
+		if(currentTime - startTime > 1000)
+			active = false;
+		
+		
 		//thrust
 		position.x += thrust.x * SPEED;
 		position.y += thrust.y * SPEED; 
@@ -41,13 +50,15 @@ public class Bullet extends Drawable implements Flyable {
 		if(Math.abs(position.y) >= GameRenderer.SCREEN_HEIGHT)
 			position.y = -position.y;
 		
+		
+		
+		
 	}
 	
 	public void setThrust()
 	{
 		thrust.x += -.01*Math.sin(angle*Math.PI/180);
     	thrust.y += .01*Math.cos(angle*Math.PI/180);
-    	System.out.println("thrust x = " + thrust.x);
 	}
 
 	@Override

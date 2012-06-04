@@ -89,6 +89,7 @@ public class GameRenderer implements Renderer {
 			{
 				bullet.update();
 				bullet.glDraw(gl, bullet.getPosition(), bullet.getAngle());
+				System.out.println("bullet position = " + bullet.getPosition());
 			}
 		}
 	
@@ -108,6 +109,9 @@ public class GameRenderer implements Renderer {
 				bullet.active = true;
 				bullet.angle = (float) (mAngle - Math.PI/2);
 				bullet.setThrust();
+				
+				break;
+				
 			}
 		}
 		
