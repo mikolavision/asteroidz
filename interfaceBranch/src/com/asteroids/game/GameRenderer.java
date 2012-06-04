@@ -17,6 +17,7 @@ public class GameRenderer implements Renderer {
 	public static int numAsteroids = 20;
 	public float mAngle;
 	public static boolean isPressed = false;
+	public boolean isIterating = false;
 	
 	public Ship player;
 	public ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); 
@@ -86,6 +87,7 @@ public class GameRenderer implements Renderer {
 		}
 		
 		//update the active bullets
+		isIterating = true;
 		for(Bullet bullet : bullets)
 		{
 			if(bullet.active)
@@ -103,34 +105,38 @@ public class GameRenderer implements Renderer {
 				bullet.glDraw(gl, bullet.position, bullet.getAngle());	
 			}
 		}
+		isIterating = false;
 	
 	}
 		
 	//handle creating or reusing player bullets
 	public void playerShoot()
 	{
-		boolean createNew = true;
-		for(Bullet bullet : bullets)
-		{
-			if(bullet.active == false)
+		if(!isIterating)
+		{	
+			boolean createNew = true;
+			for(Bullet bullet : bullets)
 			{
-				createNew = false;
-				bullet.position.x = player.position.x;
-				bullet.position.y = player.position.y;
-				bullet.active = true;
-				bullet.angle = (float) (mAngle - Math.PI/2);
-				bullet.setThrust();
-				bullet.startTime = System.currentTimeMillis();
-				break;
-				
+				if(bullet.active == false)
+				{
+					createNew = false;
+					bullet.position.x = player.position.x;
+					bullet.position.y = player.position.y;
+					bullet.active = true;
+					bullet.angle = (float) (mAngle - Math.PI/2);
+					bullet.setThrust();
+					bullet.startTime = System.currentTimeMillis();
+					break;
+					
+				}
 			}
-		}
-		
-		//If there are no inactive bullets, create a new one.
-		if(createNew)
-		{
-			bullets.add(new Bullet(player.position.x, player.position.y, mAngle));
-			System.out.println("created bullet");
+			
+			//If there are no inactive bullets, create a new one.
+			if(createNew)
+			{
+				bullets.add(new Bullet(player.position.x, player.position.y, mAngle));
+				System.out.println("created bullet");
+			}
 		}
 	}
 	
