@@ -7,7 +7,7 @@ import javax.microedition.khronos.opengles.GL10;
 
 import android.graphics.Point;
 
-public class Ship extends Drawable implements Flyable, Shootable{
+public class Ship extends Drawable implements Flyable{
 	
 	private float SPEED = 0.5f;
 	public Vector2f position;
@@ -57,6 +57,8 @@ public class Ship extends Drawable implements Flyable, Shootable{
 			position.y = -position.y;
 		
 		
+		
+		
 	}
 
 	public void setAngle(float angle){
@@ -89,16 +91,5 @@ public class Ship extends Drawable implements Flyable, Shootable{
 		return position;
 	}
 
-	@Override
-	public void Bullet(ArrayList bulletList) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void shoot(GL10 gl) {
-		// TODO Auto-generated method stub
-		
-	}
 	
 }

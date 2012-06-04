@@ -12,20 +12,15 @@ import android.view.MotionEvent;
 
 public class GameRenderer implements Renderer {
 
-	private float SPEED = 0.5f;
-	private float MAX_SPEED = 1;
-	
 	public static float SCREEN_WIDTH = 3.5f;
 	public static float SCREEN_HEIGHT = 2.5f;
 	public static int numAsteroids = 3;
 	public float mAngle;
-	public float thrustX, thrustY;
-	public float posX, posY;
 	public static boolean isPressed = false;
 	
 	public Ship player;
-	public Bullet bullet;
 	public ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); 
+	public ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	
 	private FloatBuffer triangleVB;
 	private FloatBuffer starVB;
@@ -46,13 +41,13 @@ public class GameRenderer implements Renderer {
 
 		//create the player
 		player = new Ship();
-		bullet = new Bullet();
 		
 		//create a list of asteroids
 		for(int i=0; i < numAsteroids; i++)
 		{
 			asteroids.add(new Asteroid());
 		}
+		
 		
 	}
 
@@ -72,12 +67,13 @@ public class GameRenderer implements Renderer {
 		GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 		
 		
+		
+		
 		// So far all the code we need to get the ship class working...
 		player.setAngle(mAngle);
 		player.update();
 		player.glDraw(gl, player.getPosition(), player.getAngle());
 		
-		bullet.glDraw(gl, bullet.getPosition(), bullet.getAngle());
 		
 		//update the asteroids
 		for(Asteroid asteroid : asteroids)
@@ -85,37 +81,42 @@ public class GameRenderer implements Renderer {
 			asteroid.update();
 			asteroid.glDraw(gl, asteroid.getPosition(), asteroid.getAngle());
 		}
-	
-	}
-	
-	public void onTouch(MotionEvent e){
-		// TODO: Implement isPressed like functionality
-		player.move();
-	}
-	
-	public void findPosition()
-	{
-		//find the position of the ship based on velocity and acceleration
-		if(isPressed)
+		
+		//update the active bullets
+		for(Bullet bullet : bullets)
 		{
-			//convert polar coordinates to Cartesian 
-			thrustY += .01*Math.cos(mAngle*Math.PI/180);
-			thrustX += -.01*Math.sin(mAngle*Math.PI/180);
+			if(bullet.active)
+			{
+				bullet.update();
+				bullet.glDraw(gl, bullet.getPosition(), bullet.getAngle());
+			}
+		}
+	
+	}
+		
+	//handle creating or reusing player bullets
+	public void playerShoot()
+	{
+		boolean createNew = true;
+		for(Bullet bullet : bullets)
+		{
+			if(bullet.active == false)
+			{
+				createNew = false;
+				bullet.position.x = player.position.x;
+				bullet.position.y = player.position.y;
+				bullet.active = true;
+				bullet.angle = (float) (mAngle - Math.PI/2);
+				bullet.setThrust();
+			}
 		}
 		
-		//drag
-		thrustY = thrustY/10;
-		thrustX = thrustX/10;
-		
-		posY += thrustY * SPEED;
-		posX += thrustX * SPEED;
-			
-		//Flip the sip to the opposite side if it goes off-screen
-		if(Math.abs(posX) >= SCREEN_WIDTH)
-			posX = -posX;
-		
-		if(Math.abs(posY) >= SCREEN_HEIGHT)
-			posY = -posY;
+		//If there are no inactive bullets, create a new one.
+		if(createNew)
+		{
+			bullets.add(new Bullet(player.position.x, player.position.y, mAngle));
+			System.out.println("created bullet");
+		}
 	}
 	
 
