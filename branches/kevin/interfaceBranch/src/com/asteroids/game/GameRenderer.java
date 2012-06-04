@@ -14,7 +14,7 @@ public class GameRenderer implements Renderer {
 
 	public static float SCREEN_WIDTH = 3.5f;
 	public static float SCREEN_HEIGHT = 2.5f;
-	public static int numAsteroids = 3;
+	public static int numAsteroids = 20;
 	public float mAngle;
 	public static boolean isPressed = false;
 	
