@@ -75,6 +75,12 @@ public class GameSurfaceView extends GLSurfaceView{
 	     if(x < 400)
 	     {
 	    	 //If the user touches the left side of the screen shoot bullets
+	    	 switch (e.getAction()) {
+ 		 		case MotionEvent.ACTION_DOWN:
+ 		 		mRenderer.playerShoot();
+ 		 		break;
+	    	 }
+	    	 
 	     }
 	     else
 	    	 if(x > 400)
@@ -88,7 +94,7 @@ public class GameSurfaceView extends GLSurfaceView{
 	    		 	case MotionEvent.ACTION_UP:
 	                mRenderer.isPressed = false;
 	                break;
-	                }
+	             }
 			
 			// pass the event on to the render
 			//mRenderer.onTouch(e);
