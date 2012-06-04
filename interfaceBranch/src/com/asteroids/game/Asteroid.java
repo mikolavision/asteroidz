@@ -1,5 +1,7 @@
 package com.asteroids.game;
 
+import java.util.Random;
+
 import javax.microedition.khronos.opengles.GL10;
 
 import android.graphics.Point;
@@ -9,6 +11,7 @@ public class Asteroid extends Drawable implements Flyable {
 	public Vector2f position;
 	public Vector2f thrust = new Vector2f(0.00001f, 0.00001f);
 	protected float angle;
+	protected Random random = new Random();
 	
 	public Asteroid(){
 		super();
@@ -23,9 +26,9 @@ public class Asteroid extends Drawable implements Flyable {
 		setCoords(coords);
 		setDrawMode(GL10.GL_LINE_STRIP);
 		
+		
 		position = new Vector2f();
-		position.x = 0;
-		position.y = 0;
+		spawnPosition();
 			
 		thrust.y = (float) ((2*Math.random()-1)/10);
 		thrust.x = (float) ((2*Math.random()-1)/10);
@@ -49,6 +52,20 @@ public class Asteroid extends Drawable implements Flyable {
 		if(Math.abs(position.y) >= GameRenderer.SCREEN_HEIGHT)
 			position.y = -position.y;
 		
+	}
+	
+	public void spawnPosition()
+	{
+		//Decide whether the asteroid spawns on the left or right side
+		int side = random.nextInt(2);
+		if(side == 0)
+			position.x = -random.nextFloat() - 2;
+		else
+			position.x = random.nextFloat() + 2;
+		
+		position.y = random.nextFloat()*4 - 2;
+		
+		System.out.println("position.x = " + position.x);
 	}
 
 	@Override
