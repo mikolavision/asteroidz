@@ -88,8 +88,7 @@ public class GameRenderer implements Renderer {
 			if(bullet.active)
 			{
 				bullet.update();
-				bullet.glDraw(gl, bullet.getPosition(), bullet.getAngle());
-				System.out.println("bullet position = " + bullet.getPosition());
+				bullet.glDraw(gl, bullet.position, bullet.getAngle());	
 			}
 		}
 	
@@ -109,7 +108,7 @@ public class GameRenderer implements Renderer {
 				bullet.active = true;
 				bullet.angle = (float) (mAngle - Math.PI/2);
 				bullet.setThrust();
-				
+				bullet.startTime = System.currentTimeMillis();
 				break;
 				
 			}

@@ -46,8 +46,8 @@ public class Ship extends Drawable implements Flyable{
 			move();
 		}
 		
-		//position.x += thrust.x * SPEED;
-		//position.y += thrust.y * SPEED;
+		position.x += thrust.x * SPEED;
+		position.y += thrust.y * SPEED;
 		
 		
 		//Flip the ship to the opposite side if it goes off-screen
