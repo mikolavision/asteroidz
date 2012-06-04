@@ -28,7 +28,7 @@ public class GameSurfaceView extends GLSurfaceView{
 			mAccelX = event.values[0];
 			mAccelY = event.values[1];
 			
-			mRenderer.mAngle = 45;
+			mRenderer.mAngle += mAccelY * ROTATE_SCALE_SPEED;
 			requestRender();
 		}
 		
@@ -69,9 +69,7 @@ public class GameSurfaceView extends GLSurfaceView{
 		
 		 float x = e.getX();
 	     float y = e.getY();
-	     
-	     System.out.println("x =" + x + " y = " + y);
-	     
+	     	     
 	     if(x < 400)
 	     {
 	    	 //If the user touches the left side of the screen shoot bullets
