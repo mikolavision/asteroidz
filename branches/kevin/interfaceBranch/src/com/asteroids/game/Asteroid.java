@@ -52,7 +52,7 @@ public class Asteroid extends Drawable implements Flyable {
 			position.x = -position.x;
 		
 		if(Math.abs(position.y) >= GameRenderer.SCREEN_HEIGHT)
-			position.y = -position.y;
+			position.y = -position.y; 
 		
 	}
 	
