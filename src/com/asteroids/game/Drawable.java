@@ -13,16 +13,11 @@ public abstract class Drawable {
 	private float coords[];
 	private FloatBuffer fbuffer;
 	private int DrawMode;
-	private Point position;
-	private float angle;
 	
 	public Drawable(){
 		initializeBuffer();
-		setDrawMode(GL10.GL_LINES);
-		position = new Point();
-		position.x = 0;
-		position.y = 0;
-		angle = 0;
+		setDrawMode(GL10.GL_LINE_STRIP);
+
 	}
 	
 	/**
@@ -81,19 +76,33 @@ public abstract class Drawable {
 		fbuffer = createBuffer(coords);
 	}
 	
-	public Point getPosition(){
-		return position;
-	}
+	//public Vector2f getPosition(){
+	//	return position;
+	//}
 	
-	public void glDraw(GL10 gl){
+	public void glDraw(GL10 gl, Vector2f position, float angle){
 		gl.glPushMatrix();
 		
 		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
-		gl.glRotatef(angle, 0, 0, 1);
 		gl.glTranslatef(position.x, position.y, 0.0f);
+		gl.glRotatef(angle, 0, 0, 1);
 		FloatBuffer vb = getBuffer();
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vb);
-		gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, 5);
+		gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, getBufferSize());
+		
+		gl.glPopMatrix();
+	
+	}
+	
+	public void glDraw(GL10 gl, float x, float y, float angle){
+		gl.glPushMatrix();
+		
+		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
+		gl.glTranslatef(x, y, 0.0f);
+		gl.glRotatef(angle, 0, 0, 1);
+		FloatBuffer vb = getBuffer();
+		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vb);
+		gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, getBufferSize());
 		
 		gl.glPopMatrix();
 	

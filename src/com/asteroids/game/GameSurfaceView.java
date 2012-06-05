@@ -65,44 +65,39 @@ public class GameSurfaceView extends GLSurfaceView{
         // and other input controls. In this case, you are only
         // interested in events where the touch position changed.
 		
-		/* this code is not used anymore
-		 * float x = e.getX();
-        float y = e.getY();
-        System.out.println("TOUCH");
-        switch (e.getAction()) {
-        case MotionEvent.ACTION_MOVE:
-
-            float dx = x - mPreviousX;
-            float dy = y - mPreviousY;
-
-            // reverse direction of rotation above the mid-line
-            if (y > getHeight() / 2) {
-              dx = dx * -1 ;
-            }
-
-            // reverse direction of rotation to left of the mid-line
-            if (x < getWidth() / 2) {
-              dy = dy * -1 ;
-            }
-          
-            // mRenderer.mAngle += (mAccelY) * TOUCH_SCALE_FACTOR;
-            //requestRender();
-    	}
-
-        mPreviousX = x;
-        mPreviousY = y; */
-		
 		//check to see if the user has a finger on the screen
-		switch (e.getAction()) {
-        case MotionEvent.ACTION_DOWN:
-        	mRenderer.isPressed = true;
-        	break;
-        
-        case MotionEvent.ACTION_UP:
-        	mRenderer.isPressed = false;
-        	break;
-		}
 		
+		 float x = e.getX();
+	     float y = e.getY();
+	     	     
+	     if(x < 400)
+	     {
+	    	 //If the user touches the left side of the screen shoot bullets
+	    	 switch (e.getAction()) {
+ 		 		case MotionEvent.ACTION_DOWN:
+ 		 		mRenderer.playerShoot();
+ 		 		break;
+	    	 }
+	    	 
+	     }
+	     else
+	    	 if(x > 400)
+	    	 {
+	    		 //touching the right side of the screen adds thrust
+	    		 switch (e.getAction()) {
+	    		 	case MotionEvent.ACTION_DOWN:
+	                mRenderer.isPressed = true;
+	                break;
+	        
+	    		 	case MotionEvent.ACTION_UP:
+	                mRenderer.isPressed = false;
+	                break;
+	             }
+			
+			// pass the event on to the render
+			//mRenderer.onTouch(e);
+	    	 }
+			
 		
 		return true;
 	}

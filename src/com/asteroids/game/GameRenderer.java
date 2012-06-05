@@ -1,26 +1,27 @@
 package com.asteroids.game;
 
 import java.nio.*;
+import java.util.ArrayList;
 
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
 import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
+import android.view.MotionEvent;
 
 public class GameRenderer implements Renderer {
 
-	private float SPEED = 0.5f;
-	private float MAX_SPEED = 1;
-	
-	public float SCREEN_WIDTH = 3.5f;
-	public float SCREEN_HEIGHT = 2.5f;
+	public static float SCREEN_WIDTH = 3.5f;
+	public static float SCREEN_HEIGHT = 2.5f;
+	public static int numAsteroids = 20;
 	public float mAngle;
-	public float thrustX, thrustY;
-	public float posX, posY;
-	public boolean isPressed = false;
+	public static boolean isPressed = false;
+	public boolean isIterating = false;
 	
-	private Ship test_ship;
+	public Ship player;
+	public ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); 
+	public ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	
 	private FloatBuffer triangleVB;
 	private FloatBuffer starVB;
@@ -39,14 +40,21 @@ public class GameRenderer implements Renderer {
 	
 	public void intitialize() {
 
-		test_ship = new Ship();
+		//create the player
+		player = new Ship();
+		
+		//create a list of asteroids
+		for(int i=0; i < numAsteroids; i++)
+		{
+			asteroids.add(new Asteroid());
+		}
+		
 		
 	}
 
 	public void onDrawFrame(GL10 gl) {
 		
-		//Since we are in 2D there is no need for depth
-		gl.glDisable(GL10.GL_DEPTH_TEST);
+	
 		
 		// Redraw background color
 		gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
@@ -59,44 +67,80 @@ public class GameRenderer implements Renderer {
 		//When using GL_MODELVIEW, you must set the view point
 		GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 		
-		test_ship.glDraw(gl);
 		
 		
-		// Use the mAngle member as the rotation value
-		findPosition();
-		gl.glTranslatef(posX, posY, 0.0f);
-        gl.glRotatef(mAngle, 0.0f, 0.0f, 1.0f); 
-        System.out.printf("Angle: %f\n ThrustX: %f\n ThrustY: %f\n", mAngle, thrustX, thrustY);
 		
-		//Draw the triangle
-		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
-		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, triangleVB);
-		gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, 5);
+		// So far all the code we need to get the ship class working...
+		player.setAngle(mAngle);
+		player.update();
+		player.glDraw(gl, player.getPosition(), player.getAngle());
 		
 		
-	}
-	
-	public void findPosition()
-	{
-		//find the position of the ship based on velocity and acceleration
-		if(isPressed)
+		//update the asteroids
+		for(Asteroid asteroid : asteroids)
 		{
-			//convert polar coordinates to Cartesian 
-			thrustY += .01*Math.cos(mAngle*Math.PI/180);
-			thrustX += -.01*Math.sin(mAngle*Math.PI/180);
+			if(asteroid.active)
+			{
+				asteroid.update();
+				asteroid.glDraw(gl, asteroid.getPosition(), asteroid.getAngle());
+			}
 		}
 		
-		posY += thrustY * SPEED;
-		posX += thrustX * SPEED;
-			
-		//Flip the sip to the opposite side if it goes off-screen
-		if(Math.abs(posX) >= SCREEN_WIDTH)
-			posX = -posX;
-		
-		if(Math.abs(posY) >= SCREEN_HEIGHT)
-			posY = -posY;
-		System.out.printf("PosX: %f\n posY: %f\n", posX, posY);
+		//update the active bullets
+		isIterating = true;
+		for(Bullet bullet : bullets)
+		{
+			if(bullet.active)
+			{
+				bullet.update();
+				
+				//check for collisions between the bullets and asteroids
+				for(Asteroid asteroid : asteroids)
+					if(bullet.collidesWith(asteroid))
+					{
+						bullet.active = false;
+						asteroid.active = false;
+					}
+				
+				bullet.glDraw(gl, bullet.position, bullet.getAngle());	
+			}
+		}
+		isIterating = false;
+	
 	}
+		
+	//handle creating or reusing player bullets
+	public void playerShoot()
+	{
+		if(!isIterating)
+		{	
+			boolean createNew = true;
+			for(Bullet bullet : bullets)
+			{
+				if(bullet.active == false)
+				{
+					createNew = false;
+					bullet.position.x = player.position.x;
+					bullet.position.y = player.position.y;
+					bullet.active = true;
+					bullet.angle = (float) (mAngle - Math.PI/2);
+					bullet.setThrust();
+					bullet.startTime = System.currentTimeMillis();
+					break;
+					
+				}
+			}
+			
+			//If there are no inactive bullets, create a new one.
+			if(createNew)
+			{
+				bullets.add(new Bullet(player.position.x, player.position.y, mAngle));
+				System.out.println("created bullet");
+			}
+		}
+	}
+	
+
 
 	public void onSurfaceChanged(GL10 gl, int width, int height) {
 		gl.glViewport(0, 0, width, height);
