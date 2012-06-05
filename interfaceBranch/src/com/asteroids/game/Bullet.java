@@ -36,7 +36,7 @@ public class Bullet extends Drawable implements Flyable {
 		//check whether to make the bullet inactive
 		long currentTime = System.currentTimeMillis();
 		
-		if(currentTime - startTime > 3000)
+		if(currentTime - startTime > 5000)
 			active = false;
 		
 		
