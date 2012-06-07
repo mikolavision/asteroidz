@@ -13,6 +13,7 @@ public class Ship extends Drawable implements Flyable{
 	public Vector2f position;
 	public Vector2f thrust = new Vector2f(0.00001f, 0.00001f);
 	protected float angle;
+	public float MAX_SPEED = 10.0f;
 	
 	public Ship(){
 		super();
@@ -46,6 +47,13 @@ public class Ship extends Drawable implements Flyable{
 			move();
 		}
 		
+		//Set a max speed the ship can move
+		if(thrust.x > MAX_SPEED)
+			thrust.x = MAX_SPEED;
+		
+		if(thrust.y > MAX_SPEED)
+			thrust.y = MAX_SPEED;
+				
 		position.x += thrust.x * SPEED;
 		position.y += thrust.y * SPEED;
 		
