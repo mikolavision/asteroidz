@@ -18,6 +18,7 @@ public class GameRenderer implements Renderer {
 	public float mAngle;
 	public static boolean isPressed = false;
 	public boolean isIterating = false;
+	public boolean bulletWaiting = false;
 	
 	public Ship player;
 	public ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); 
@@ -106,6 +107,10 @@ public class GameRenderer implements Renderer {
 			}
 		}
 		isIterating = false;
+		
+		if(bulletWaiting)
+			playerShoot();
+		bulletWaiting = false;
 	
 	}
 		
@@ -138,6 +143,8 @@ public class GameRenderer implements Renderer {
 				System.out.println("created bullet");
 			}
 		}
+		else
+			bulletWaiting = true;
 	}
 	
 
