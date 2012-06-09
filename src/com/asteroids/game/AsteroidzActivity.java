@@ -7,8 +7,10 @@ import android.content.pm.ActivityInfo;
 import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.view.View;
+import android.view.ViewGroup.LayoutParams;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.Button;
 
 public class AsteroidzActivity extends Activity {
     
@@ -22,7 +24,8 @@ public class AsteroidzActivity extends Activity {
     	requestWindowFeature(Window.FEATURE_NO_TITLE);
     	getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN, 
                 WindowManager.LayoutParams.FLAG_FULLSCREEN);
-        setContentView(R.layout.main);
+        gameGLView = new GameSurfaceView( getApplicationContext(), this );
+        setContentView(gameGLView);
     }
     
     public void playGame(View view){

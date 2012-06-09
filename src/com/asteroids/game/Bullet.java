@@ -30,7 +30,6 @@ public class Bullet extends Drawable implements Flyable {
 	}
 		
 	
-	@Override
 	public void update() {
 		
 		//check whether to make the bullet inactive
@@ -70,15 +69,11 @@ public class Bullet extends Drawable implements Flyable {
 			return false;
 	}
 	
-
-
-	@Override
 	public void explode() {
 		// TODO Auto-generated method stub
 		
 	}
 
-	@Override
 	public Vector2f getPosition() {
 		// TODO Auto-generated method stub
 		return position;
@@ -88,8 +83,6 @@ public class Bullet extends Drawable implements Flyable {
 		return angle;
 	}
 
-
-	@Override
 	public boolean collidesWith(Flyable obj) {
 		// TODO Auto-generated method stub
 		return false;

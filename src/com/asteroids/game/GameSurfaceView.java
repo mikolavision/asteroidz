@@ -70,35 +70,50 @@ public class GameSurfaceView extends GLSurfaceView{
 		 float x = e.getX();
 	     float y = e.getY();
 	     	     
-	     if(x < 400)
-	     {
-	    	 //If the user touches the left side of the screen shoot bullets
+	     switch(GameRenderer.STATE){
+	     
+	     case MAIN_MENU:
+	    	 //If the user touches the screen
 	    	 switch (e.getAction()) {
- 		 		case MotionEvent.ACTION_DOWN:
- 		 		mRenderer.playerShoot();
- 		 		break;
+		 		case MotionEvent.ACTION_DOWN:
+		 			System.out.println("X,"+x+" Y,"+y);
+		 			//if((x<0.5f&&x>-0.5f)&&(y<-0.1f&&y>-0.4f))
+		 				GameRenderer.STATE = GameState.INITIALIZE;
+		 		break;
 	    	 }
-	    	 
+	    	 break;//MAIN_MENU
+	     case PLAYING:
+		     if(x < 400)
+		     {
+		    	 //If the user touches the left side of the screen shoot bullets
+		    	 switch (e.getAction()) {
+	 		 		case MotionEvent.ACTION_DOWN:
+	 		 		mRenderer.playerShoot();
+	 		 		break;
+		    	 }
+		    	 
+		     }
+		     else
+		    	 if(x > 400)
+		    	 {
+		    		 //touching the right side of the screen adds thrust
+		    		 switch (e.getAction()) {
+		    		 	case MotionEvent.ACTION_DOWN:
+		                mRenderer.isPressed = true;
+		                break;
+		        
+		    		 	case MotionEvent.ACTION_UP:
+		                mRenderer.isPressed = false;
+		                break;
+		             }
+				
+				// pass the event on to the render
+				//mRenderer.onTouch(e);
+		    	 }
+				
+		     break;//PLAYING
 	     }
-	     else
-	    	 if(x > 400)
-	    	 {
-	    		 //touching the right side of the screen adds thrust
-	    		 switch (e.getAction()) {
-	    		 	case MotionEvent.ACTION_DOWN:
-	                mRenderer.isPressed = true;
-	                break;
-	        
-	    		 	case MotionEvent.ACTION_UP:
-	                mRenderer.isPressed = false;
-	                break;
-	             }
-			
-			// pass the event on to the render
-			//mRenderer.onTouch(e);
-	    	 }
-			
-		
+		     
 		return true;
 	}
 
