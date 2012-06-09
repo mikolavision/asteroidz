@@ -14,11 +14,11 @@ public class GameRenderer implements Renderer {
 
 	public static float SCREEN_WIDTH = 3.5f;
 	public static float SCREEN_HEIGHT = 2.5f;
-	public static int numAsteroids = 20;
 	public float mAngle;
 	public static boolean isPressed = false;
 	public boolean isIterating = false;
 	public boolean bulletWaiting = false;
+	public int level = 1;
 	
 	public Ship player;
 	public ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); 
@@ -45,12 +45,23 @@ public class GameRenderer implements Renderer {
 		//create the player
 		player = new Ship();
 		
+		newLevel();
+		
+	}
+	
+	//Start a new level
+	public void newLevel()
+	{
+		//clear all array lists 
+		asteroids.clear();
+		asteroidsWaiting.clear();
+		bullets.clear();
+		
 		//create a list of asteroids
-		for(int i=0; i < numAsteroids; i++)
+		for(int i=0; i < level*3; i++)
 		{
 			asteroids.add(new Asteroid(2));
 		}
-		
 		
 	}
 
@@ -78,14 +89,23 @@ public class GameRenderer implements Renderer {
 		player.glDraw(gl, player.getPosition(), player.getAngle());
 		
 		
-		//update the asteroids
+		//update the asteroids and check if there are still active asteroids
+		boolean stillAsteroids = false;
 		for(Asteroid asteroid : asteroids)
 		{
 			if(asteroid.active)
 			{
 				asteroid.update();
 				asteroid.glDraw(gl, asteroid.getPosition(), asteroid.getAngle());
+				stillAsteroids = true;
 			}
+		}
+		
+		//If there are no more active asteroids, start the next level
+		if(!stillAsteroids)
+		{
+			level++;
+			newLevel();
 		}
 		
 		//update the active bullets
@@ -114,6 +134,8 @@ public class GameRenderer implements Renderer {
 				bullet.glDraw(gl, bullet.position, bullet.getAngle());	
 			}
 		}
+		
+		
 		
 		//add the asteroids on the waiting list to the main asteroid lists
 		asteroids.addAll(asteroidsWaiting);
