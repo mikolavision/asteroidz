@@ -22,6 +22,7 @@ public class GameRenderer implements Renderer {
 	
 	public Ship player;
 	public ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); 
+	public ArrayList<Asteroid> asteroidsWaiting = new ArrayList<Asteroid>(); 
 	public ArrayList<Bullet> bullets = new ArrayList<Bullet>();
 	
 	private FloatBuffer triangleVB;
@@ -47,7 +48,7 @@ public class GameRenderer implements Renderer {
 		//create a list of asteroids
 		for(int i=0; i < numAsteroids; i++)
 		{
-			asteroids.add(new Asteroid());
+			asteroids.add(new Asteroid(2));
 		}
 		
 		
@@ -97,15 +98,27 @@ public class GameRenderer implements Renderer {
 				
 				//check for collisions between the bullets and asteroids
 				for(Asteroid asteroid : asteroids)
-					if(bullet.collidesWith(asteroid))
+					if(bullet.collidesWith(asteroid) && asteroid.active)
 					{
+						System.out.println("Collision!!!!!1");
 						bullet.active = false;
 						asteroid.active = false;
+						
+						if(asteroid.size == 2)
+						{
+							asteroidsWaiting.add(new Asteroid(1,asteroid.position.x, asteroid.position.y));
+							asteroidsWaiting.add(new Asteroid(1,asteroid.position.x, asteroid.position.y));
+						}
 					}
 				
 				bullet.glDraw(gl, bullet.position, bullet.getAngle());	
 			}
 		}
+		
+		//add the asteroids on the waiting list to the main asteroid lists
+		asteroids.addAll(asteroidsWaiting);
+		asteroidsWaiting.clear();
+		
 		isIterating = false;
 		
 		if(bulletWaiting)

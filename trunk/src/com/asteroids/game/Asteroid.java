@@ -14,10 +14,14 @@ public class Asteroid extends Drawable implements Flyable {
 	protected Random random = new Random();
 	public float radius = 0.3f;
 	public boolean active = true; 
+	public int size = 2;
 	
-	public Asteroid(){
+	//For new Asteroids created at the beggining of the game (includes random spawn)
+	public Asteroid(int aSize){
 		super();
-		float coords[] = {
+		size = aSize;
+		
+		float bigCoords[] = {
 	            // X, Y, Z
 	            -0.2f, -0.2f, 0,
 	             -0.2f,  0.2f, 0,
@@ -25,12 +29,67 @@ public class Asteroid extends Drawable implements Flyable {
 	            0.2f, -0.2f, 0,
 	            -0.2f, -0.2f, 0
 	        };
-		setCoords(coords);
+		float mediumCoords[] = {
+	            // X, Y, Z
+	            -0.1f, -0.1f, 0,
+	             -0.1f,  0.1f, 0,
+	             0.1f, 0.1f, 0,
+	            0.1f, -0.1f, 0,
+	            -0.1f, -0.1f, 0
+	        };
+		
+		if(size == 2)
+		setCoords(bigCoords);
+		
+		if(size == 1)
+		setCoords(mediumCoords);	
+		
 		setDrawMode(GL10.GL_LINE_STRIP);
 		
 		
 		position = new Vector2f();
 		spawnPosition();
+			
+		thrust.y = (float) ((2*Math.random()-1)/10);
+		thrust.x = (float) ((2*Math.random()-1)/10);
+		
+		angle = 0;
+	}
+	
+	//for asteroids created DURING the game (includes defined set spawn)
+	public Asteroid(int aSize, float posX, float posY)
+	{
+		super();
+		size = aSize;
+		
+		float bigCoords[] = {
+	            // X, Y, Z
+	            -0.2f, -0.2f, 0,
+	             -0.2f,  0.2f, 0,
+	             0.2f, 0.2f, 0,
+	            0.2f, -0.2f, 0,
+	            -0.2f, -0.2f, 0
+	        };
+		float mediumCoords[] = {
+	            // X, Y, Z
+	            -0.1f, -0.1f, 0,
+	             -0.1f,  0.1f, 0,
+	             0.1f, 0.1f, 0,
+	            0.1f, -0.1f, 0,
+	            -0.1f, -0.1f, 0
+	        };
+		
+		if(size == 2)
+		setCoords(bigCoords);
+		
+		if(size == 1)
+		setCoords(mediumCoords);	
+		
+		setDrawMode(GL10.GL_LINE_STRIP);
+				
+		position = new Vector2f();
+		position.x = posX;
+		position.y = posY;
 			
 		thrust.y = (float) ((2*Math.random()-1)/10);
 		thrust.x = (float) ((2*Math.random()-1)/10);

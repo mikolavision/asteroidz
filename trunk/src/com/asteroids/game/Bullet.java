@@ -43,7 +43,7 @@ public class Bullet extends Drawable implements Flyable {
 		//thrust
 		position.x += thrust.x * SPEED;
 		position.y += thrust.y * SPEED; 
-		System.out.println("postion =" + position);
+
 		
 		//Flip the bullet to the opposite side if it goes off-screen
 		if(Math.abs(position.x) >= GameRenderer.SCREEN_WIDTH)
