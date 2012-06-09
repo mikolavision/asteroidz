@@ -22,7 +22,7 @@ public abstract class Drawable {
 	
 	/**
 	 * set the draw mode when drawing from a buffer
-	 * set to GL_LINES by default
+	 * set to GL_LINE_STRIP by default
 	 * @param gl10_drawMode
 	 */
 	public void setDrawMode(int gl10_drawMode) {
@@ -103,6 +103,19 @@ public abstract class Drawable {
 		FloatBuffer vb = getBuffer();
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vb);
 		gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, getBufferSize());
+		
+		gl.glPopMatrix();
+	
+	}
+	
+	public void glDraw(GL10 gl, float x, float y){
+		gl.glPushMatrix();
+		
+		gl.glColor4f(0.9f, 0.9f, 0.9f, 0.0f);
+		gl.glTranslatef(x, y, 0.0f);
+		FloatBuffer vb = getBuffer();
+		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, vb);
+		gl.glDrawArrays(DrawMode, 0, getBufferSize());
 		
 		gl.glPopMatrix();
 	

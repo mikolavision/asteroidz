@@ -97,7 +97,6 @@ public class Asteroid extends Drawable implements Flyable {
 		angle = 0;
 	}
 	
-	@Override
 	public void update() {
 		//thrust
 		position.x += thrust.x;
@@ -129,14 +128,11 @@ public class Asteroid extends Drawable implements Flyable {
 		System.out.println("position.x = " + position.x);
 	}
 
-	@Override
 	public boolean collidesWith(Flyable obj) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 	
-
-	@Override
 	public void explode() {
 		// TODO Auto-generated method stub
 		
