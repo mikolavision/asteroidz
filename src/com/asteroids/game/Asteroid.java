@@ -20,7 +20,6 @@ public class Asteroid extends Drawable implements Flyable {
 	public Asteroid(int aSize){
 		super();
 		size = aSize;
-		
 		float bigCoords[] = {
 	            // X, Y, Z
 	            -0.22f, -0.12f, 0,
@@ -39,18 +38,32 @@ public class Asteroid extends Drawable implements Flyable {
 	        };
 		float mediumCoords[] = {
 	            // X, Y, Z
-	            -0.1f, -0.1f, 0,
-	             -0.1f,  0.1f, 0,
-	             0.1f, 0.1f, 0,
-	            0.1f, -0.1f, 0,
-	            -0.1f, -0.1f, 0
+				 -0.11f, -0.06f, 0,
+	             -0.03f,  -0.08f, 0,
+	             -0.01f, -0.13f, 0,
+	            0.09f, -0.1f, 0,
+	            0.13f, -0.04f, 0,
+	            0.12f, 0.05f, 0,
+	            0.06f, 0.07f, 0,
+	            0.06f, 0.12f, 0,
+	            -0.03f, 0.14f, 0,
+	            -0.03f, 0.14f, 0,
+	            -0.11f, 0.08f, 0,
+	            -0.10f, 0.0f, 0,
+	            -0.11f, -0.06f, 0
 	        };
 		
 		if(size == 2)
-		setCoords(bigCoords);
+		{
+			setCoords(bigCoords);
+			radius = 0.3f;
+		}
 		
 		if(size == 1)
-		setCoords(mediumCoords);	
+		{
+			setCoords(mediumCoords);	
+			radius = 0.15f;
+		}	
 		
 		setDrawMode(GL10.GL_LINE_STRIP);
 		
@@ -88,18 +101,32 @@ public class Asteroid extends Drawable implements Flyable {
 	        };
 		float mediumCoords[] = {
 	            // X, Y, Z
-	            -0.1f, -0.1f, 0,
-	             -0.1f,  0.1f, 0,
-	             0.1f, 0.1f, 0,
-	            0.1f, -0.1f, 0,
-	            -0.1f, -0.1f, 0
+				 -0.11f, -0.06f, 0,
+	             -0.03f,  -0.08f, 0,
+	             -0.01f, -0.13f, 0,
+	            0.09f, -0.1f, 0,
+	            0.13f, -0.04f, 0,
+	            0.12f, 0.05f, 0,
+	            0.06f, 0.07f, 0,
+	            0.06f, 0.12f, 0,
+	            -0.03f, 0.14f, 0,
+	            -0.03f, 0.14f, 0,
+	            -0.11f, 0.08f, 0,
+	            -0.10f, 0.0f, 0,
+	            -0.11f, -0.06f, 0
 	        };
 		
 		if(size == 2)
-		setCoords(bigCoords);
+		{
+			setCoords(bigCoords);
+			radius = 0.3f;
+		}
 		
 		if(size == 1)
-		setCoords(mediumCoords);	
+		{
+			setCoords(mediumCoords);	
+			radius = 0.15f;
+		}
 		
 		setDrawMode(GL10.GL_LINE_STRIP);
 				
