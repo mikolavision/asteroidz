@@ -24,6 +24,7 @@ public class GameRenderer implements Renderer {
 	public Button playButton;	
 	
 	public Ship player;
+	public Lives lives;
 	public ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); 
 	public ArrayList<Asteroid> asteroidsWaiting = new ArrayList<Asteroid>(); 
 	public ArrayList<Bullet> bullets = new ArrayList<Bullet>();
@@ -47,6 +48,7 @@ public class GameRenderer implements Renderer {
 
 		//create the player
 		player = new Ship();
+		lives = new Lives();
 		
 		newLevel();
 		
@@ -59,12 +61,15 @@ public class GameRenderer implements Renderer {
 		asteroids.clear();
 		asteroidsWaiting.clear();
 		bullets.clear();
+		lives.numLives = 3;
 		
 		//create a list of asteroids
 		for(int i=0; i < level*3; i++)
 		{
 			asteroids.add(new Asteroid(2));
 		}
+		
+	
 		
 	}
 
@@ -116,6 +121,9 @@ public class GameRenderer implements Renderer {
 			player.update();
 			player.glDraw(gl, player.getPosition(), player.getAngle());
 			
+			//player hud (now only displays number of lives) 
+			for(int i = 0; i < lives.numLives; i++)
+			lives.glDraw(gl, (float) (2 - 0.2*i), 1.3f, 0.0f);
 			
 			//update the asteroids and check if there are still active asteroids
 			boolean stillAsteroids = false;
@@ -229,10 +237,13 @@ public class GameRenderer implements Renderer {
 		gl.glFrustumf(-ratio, ratio, -1, 1, 3, 7);	//apply the projection matrix
 	}
 	
+
+
 	private void initializeMenu(){
 		playButton = new Button();
 	}
 	
+
 	private void initShapes(){
 	    
         float triangleCoords[] = {
