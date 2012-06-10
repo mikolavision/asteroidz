@@ -14,6 +14,7 @@ public class Ship extends Drawable implements Flyable{
 	public Vector2f thrust = new Vector2f(0.00001f, 0.00001f);
 	protected float angle;
 	public float MAX_SPEED = 10.0f;
+	public float radius = .25f;
 	
 	public Ship(){
 		super();
@@ -76,6 +77,16 @@ public class Ship extends Drawable implements Flyable{
 	
 	public float getAngle(){
 		return angle;
+	}
+	
+	//implement circle collisions
+	public boolean collidesWith(Asteroid obj) {
+		
+		float distance = (float) Math.sqrt(Math.pow(position.x - obj.position.x, 2) + Math.pow(position.y - obj.position.y, 2));
+		if(distance <= (radius+ obj.radius))
+			return true;
+		else
+			return false;
 	}
 	
 	public boolean collidesWith(Flyable obj) {
