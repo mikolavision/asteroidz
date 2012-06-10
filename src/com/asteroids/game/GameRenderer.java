@@ -135,6 +135,15 @@ public class GameRenderer implements Renderer {
 					asteroid.glDraw(gl, asteroid.getPosition(), asteroid.getAngle());
 					stillAsteroids = true;
 				}
+				
+				/*
+				//check for collisions 
+				if(player.collidesWith(asteroid))
+				{
+					asteroid.active = false;
+					playerDie();
+				}
+				*/
 			}
 			
 			//If there are no more active asteroids, start the next level
@@ -183,6 +192,10 @@ public class GameRenderer implements Renderer {
 				playerShoot();
 			bulletWaiting = false;
 			
+			
+			//check to see if the player loses the game
+			
+			
 			break;//PLAYING
 			
 		default:
@@ -191,6 +204,18 @@ public class GameRenderer implements Renderer {
 		}
 		
 	}
+	
+	/*
+	//do stuff when the player dies
+	public void playerDie()
+	{
+		lives.numLives--;
+		player.position.x = 0;
+		player.position.y = 0;
+		player.thrust.x = 0;
+		player.thrust.y = 0;
+	}
+	*/
 		
 	//handle creating or reusing player bullets
 	public void playerShoot()
