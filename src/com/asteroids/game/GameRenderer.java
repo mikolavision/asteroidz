@@ -20,8 +20,10 @@ public class GameRenderer implements Renderer {
 	public boolean bulletWaiting = false;
 	public int level = 1;
 	
+	//Main Menu
 	public static GameState STATE = GameState.MAIN_MENU;
 	public Button playButton;	
+	public Title title;
 	
 	public Ship player;
 	public Lives lives;
@@ -89,6 +91,8 @@ public class GameRenderer implements Renderer {
 			//When using GL_MODELVIEW, you must set the view point
 			GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 			
+			//Draw objects
+			title.glDraw(gl, -0.2f, 0.0f);
 			playButton.glDraw(gl, 0.0f, 0.0f);
 			
 			break;//MAIN_MENU
@@ -266,6 +270,7 @@ public class GameRenderer implements Renderer {
 
 	private void initializeMenu(){
 		playButton = new Button();
+		title = new Title();
 	}
 	
 

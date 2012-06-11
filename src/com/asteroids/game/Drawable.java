@@ -47,7 +47,7 @@ public abstract class Drawable {
 		fbuffer = createBuffer(icoords);
 	}
 	
-	private FloatBuffer createBuffer(float coords[]){
+	protected FloatBuffer createBuffer(float coords[]){
 		FloatBuffer fb;
 		ByteBuffer vbb = ByteBuffer.allocateDirect(
 				// (# of coordinate values * 4 bytes per float)
