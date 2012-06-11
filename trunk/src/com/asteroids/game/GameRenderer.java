@@ -24,6 +24,7 @@ public class GameRenderer implements Renderer {
 	public static GameState STATE = GameState.MAIN_MENU;
 	public Button playButton;	
 	public Title title;
+	public End_Title endTitle;
 	
 	public Ship player;
 	public Lives lives;
@@ -97,6 +98,23 @@ public class GameRenderer implements Renderer {
 			
 			break;//MAIN_MENU
 			
+		case GAME_OVER:
+			// Redraw background color
+			gl.glClear(GL10.GL_COLOR_BUFFER_BIT | GL10.GL_DEPTH_BUFFER_BIT);
+			gl.glClearColor(0, 0, 0, 0);
+			
+			//Set GL_MODELVIEW transfomration mode
+			gl.glMatrixMode(GL10.GL_MODELVIEW);
+			gl.glLoadIdentity();	// reset the matrix to it's default state
+			
+			//When using GL_MODELVIEW, you must set the view point
+			GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+			
+			//Draw objects
+			endTitle.glDraw(gl, -0.4f, 0.0f);
+			
+			break;//GAME_OVER
+			
 		case INITIALIZE:
 
 			initShapes();
@@ -138,16 +156,18 @@ public class GameRenderer implements Renderer {
 					asteroid.update();
 					asteroid.glDraw(gl, asteroid.getPosition(), asteroid.getAngle());
 					stillAsteroids = true;
+					
+					//check for collisions 
+					if(player.collidesWith(asteroid))
+					{
+						asteroid.active = false;
+						playerDie();
+					}
 				}
 				
-				/*
-				//check for collisions 
-				if(player.collidesWith(asteroid))
-				{
-					asteroid.active = false;
-					playerDie();
-				}
-				*/
+				
+				
+				
 			}
 			
 			//If there are no more active asteroids, start the next level
@@ -209,7 +229,7 @@ public class GameRenderer implements Renderer {
 		
 	}
 	
-	/*
+	
 	//do stuff when the player dies
 	public void playerDie()
 	{
@@ -218,8 +238,11 @@ public class GameRenderer implements Renderer {
 		player.position.y = 0;
 		player.thrust.x = 0;
 		player.thrust.y = 0;
+		
+		if(lives.numLives <= 0)
+			STATE = GameState.GAME_OVER;
 	}
-	*/
+	
 		
 	//handle creating or reusing player bullets
 	public void playerShoot()
@@ -271,6 +294,7 @@ public class GameRenderer implements Renderer {
 	private void initializeMenu(){
 		playButton = new Button();
 		title = new Title();
+		endTitle = new End_Title();
 	}
 	
 
