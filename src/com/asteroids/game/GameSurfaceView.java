@@ -82,6 +82,18 @@ public class GameSurfaceView extends GLSurfaceView{
 		 		break;
 	    	 }
 	    	 break;//MAIN_MENU
+	    	 
+	     case GAME_OVER:
+	    	 //If the user touches the screen
+	    	 switch (e.getAction()) {
+		 		case MotionEvent.ACTION_DOWN:
+		 			System.out.println("X,"+x+" Y,"+y);
+		 			//if((x<0.5f&&x>-0.5f)&&(y<-0.1f&&y>-0.4f))
+		 				GameRenderer.STATE = GameState.MAIN_MENU;
+		 		break;
+	    	 }
+	    	 break;//MAIN_MENU
+	    	 
 	     case PLAYING:
 		     if(x < 400)
 		     {
