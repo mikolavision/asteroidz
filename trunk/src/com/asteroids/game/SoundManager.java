@@ -28,8 +28,9 @@ public class SoundManager {
 	public void playSound(int index)
 	{
 		float streamVolume = mAudioManager.getStreamVolume(AudioManager.STREAM_MUSIC);
-		streamVolume = streamVolume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
+		streamVolume = 5.0f;//streamVolume / mAudioManager.getStreamMaxVolume(AudioManager.STREAM_MUSIC);
 	    mSoundPool.play((Integer) mSoundPoolMap.get(index), streamVolume, streamVolume, 1, 0, 1f);
+	    System.out.println(streamVolume);
 	}
 	 
 	public void playLoopedSound(int index)

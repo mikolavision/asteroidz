@@ -47,7 +47,7 @@ public class GameSurfaceView extends GLSurfaceView{
 		//Initialize sound
 		mSoundManager = new SoundManager();
 		mSoundManager.initSounds(context);
-		mSoundManager.addSound(1, R.raw.sound);
+		mSoundManager.addSound(1, R.raw.explosion);
     
 	    // register the accelerometer so we can retrieve values
 	    sensorManager = (SensorManager) activity.getSystemService("sensor");
@@ -110,6 +110,7 @@ public class GameSurfaceView extends GLSurfaceView{
 	 		 		case MotionEvent.ACTION_DOWN:
 	 		 		mRenderer.playerShoot();
 	 		 		mSoundManager.playSound(1);
+	 		 		mRenderer.isPressed = false;
 	 		 		break;
 		    	 }
 		    	 
