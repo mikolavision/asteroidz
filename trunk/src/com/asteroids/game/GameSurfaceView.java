@@ -14,13 +14,16 @@ public class GameSurfaceView extends GLSurfaceView{
 
     private float ROTATE_SCALE_SPEED = 1.5f;
     private GameRenderer mRenderer;
-
+    private AsteroidzActivity mActivity;
+    public Context context;
     
     // sensor manager used to control the accelerometer sensor.
     private SensorManager sensorManager;
     // accelerometer sensor values.
     private float mAccelX = 0;
     private float mAccelY = 0;
+    
+    private SoundManager mSoundManager;
     
     private final SensorEventListener accelerometerSensor = new SensorEventListener() {
 		
@@ -36,10 +39,15 @@ public class GameSurfaceView extends GLSurfaceView{
 			//Not used
 		}
 	};
+	
     
 	public GameSurfaceView(Context context, Activity activity) {
 		super(context);
-
+		
+		//Initialize sound
+		mSoundManager = new SoundManager();
+		mSoundManager.initSounds(context);
+		mSoundManager.addSound(1, R.raw.sound);
     
 	    // register the accelerometer so we can retrieve values
 	    sensorManager = (SensorManager) activity.getSystemService("sensor");
@@ -101,6 +109,7 @@ public class GameSurfaceView extends GLSurfaceView{
 		    	 switch (e.getAction()) {
 	 		 		case MotionEvent.ACTION_DOWN:
 	 		 		mRenderer.playerShoot();
+	 		 		mSoundManager.playSound(1);
 	 		 		break;
 		    	 }
 		    	 

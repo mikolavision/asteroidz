@@ -53,6 +53,8 @@ public class GameRenderer implements Renderer {
 		player = new Ship();
 		lives = new Lives();
 		
+
+		
 		newLevel();
 		
 	}
