@@ -15,6 +15,7 @@ public class Asteroid extends Drawable implements Flyable {
 	public float radius = 0.3f;
 	public boolean active = true; 
 	public int size = 2;
+	public float SPEED = 0.3f;
 	
 	//For new Asteroids created at the beggining of the game (includes random spawn)
 	public Asteroid(int aSize){
@@ -71,8 +72,8 @@ public class Asteroid extends Drawable implements Flyable {
 		position = new Vector2f();
 		spawnPosition();
 			
-		thrust.y = (float) ((2*Math.random()-1)/10);
-		thrust.x = (float) ((2*Math.random()-1)/10);
+		thrust.y = (float) ((2*Math.random()-1)/10 * SPEED);
+		thrust.x = (float) ((2*Math.random()-1)/10 * SPEED);
 		
 		angle = 0;
 	}
@@ -134,8 +135,8 @@ public class Asteroid extends Drawable implements Flyable {
 		position.x = posX;
 		position.y = posY;
 			
-		thrust.y = (float) ((2*Math.random()-1)/10);
-		thrust.x = (float) ((2*Math.random()-1)/10);
+		thrust.y = (float) ((2*Math.random()-1)/10) * SPEED;
+		thrust.x = (float) ((2*Math.random()-1)/10) * SPEED;
 		
 		angle = 0;
 	}
