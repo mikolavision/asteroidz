@@ -40,6 +40,11 @@ public class AsteroidzActivity extends Activity {
         setContentView(gameGLView);
     }
     
+	public void onPause()
+	{
+		exit(gameGLView);
+	}
+    
     public void exit(View view){
     	finish();
         System.exit(0);

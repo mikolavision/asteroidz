@@ -52,9 +52,7 @@ public class GameRenderer implements Renderer {
 		//create the player
 		player = new Ship();
 		lives = new Lives();
-		
-
-		
+	
 		newLevel();
 		
 	}
@@ -77,8 +75,11 @@ public class GameRenderer implements Renderer {
 	
 		
 	}
+	
+
 
 	public void onDrawFrame(GL10 gl) {
+		
 		
 		switch(STATE){
 			
@@ -111,6 +112,9 @@ public class GameRenderer implements Renderer {
 			
 			//When using GL_MODELVIEW, you must set the view point
 			GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+			
+			//reset lives
+			lives.numLives = 3;
 			
 			//Draw objects
 			endTitle.glDraw(gl, -0.4f, 0.0f);

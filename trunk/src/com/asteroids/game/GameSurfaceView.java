@@ -6,6 +6,7 @@ import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
+import android.media.MediaPlayer;
 import android.opengl.GLSurfaceView;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -23,6 +24,7 @@ public class GameSurfaceView extends GLSurfaceView{
     private float mAccelX = 0;
     private float mAccelY = 0;
     
+    private MediaPlayer mediaPlayer;
     private SoundManager mSoundManager;
     
     private final SensorEventListener accelerometerSensor = new SensorEventListener() {
@@ -40,6 +42,7 @@ public class GameSurfaceView extends GLSurfaceView{
 		}
 	};
 	
+	
     
 	public GameSurfaceView(Context context, Activity activity) {
 		super(context);
@@ -47,7 +50,12 @@ public class GameSurfaceView extends GLSurfaceView{
 		//Initialize sound
 		mSoundManager = new SoundManager();
 		mSoundManager.initSounds(context);
-		mSoundManager.addSound(1, R.raw.explosion);
+		mSoundManager.addSound(1, R.raw.fire);
+		mSoundManager.addSound(2, R.raw.music);
+		
+		//Initialize media player
+		mediaPlayer = MediaPlayer.create(context, R.raw.music);
+		mediaPlayer.start();
     
 	    // register the accelerometer so we can retrieve values
 	    sensorManager = (SensorManager) activity.getSystemService("sensor");
@@ -97,7 +105,7 @@ public class GameSurfaceView extends GLSurfaceView{
 		 		case MotionEvent.ACTION_DOWN:
 		 			System.out.println("X,"+x+" Y,"+y);
 		 			//if((x<0.5f&&x>-0.5f)&&(y<-0.1f&&y>-0.4f))
-		 				GameRenderer.STATE = GameState.MAIN_MENU;
+		 				GameRenderer.STATE = GameState.MAIN_MENU; 
 		 		break;
 	    	 }
 	    	 break;//MAIN_MENU
@@ -105,12 +113,12 @@ public class GameSurfaceView extends GLSurfaceView{
 	     case PLAYING:
 		     if(x < 400)
 		     {
+		    	 mRenderer.isPressed = false;
 		    	 //If the user touches the left side of the screen shoot bullets
 		    	 switch (e.getAction()) {
 	 		 		case MotionEvent.ACTION_DOWN:
 	 		 		mRenderer.playerShoot();
 	 		 		mSoundManager.playSound(1);
-	 		 		mRenderer.isPressed = false;
 	 		 		break;
 		    	 }
 		    	 
