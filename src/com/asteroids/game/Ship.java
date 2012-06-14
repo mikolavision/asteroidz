@@ -39,8 +39,8 @@ public class Ship extends Drawable implements Flyable{
 	public void update() {
 		
 		//drag is commented out so i can tell if the ship is moving on my emulator
-		//thrust.x = thrust.x/10;
-		//thrust.y = thrust.y/10;
+		thrust.x = (float) (thrust.x/1.01);
+		thrust.y = (float) (thrust.y/1.01);
 		
 		//thrust
 		if(GameRenderer.isPressed)
