@@ -13,8 +13,9 @@ public class Ship extends Drawable implements Flyable{
 	public Vector2f position;
 	public Vector2f thrust = new Vector2f(0.00001f, 0.00001f);
 	protected float angle;
-	public float MAX_SPEED = 10.0f;
+	public float MAX_SPEED = 5.0f;
 	public float radius = .25f;
+	public boolean active = true;
 	
 	public Ship(){
 		super();

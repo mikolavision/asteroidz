@@ -28,6 +28,7 @@ public class GameRenderer implements Renderer {
 	
 	public Ship player;
 	public Lives lives;
+	public Explosion explosion;
 	public ArrayList<Asteroid> asteroids = new ArrayList<Asteroid>(); 
 	public ArrayList<Asteroid> asteroidsWaiting = new ArrayList<Asteroid>(); 
 	public ArrayList<Bullet> bullets = new ArrayList<Bullet>();
@@ -52,6 +53,7 @@ public class GameRenderer implements Renderer {
 		//create the player
 		player = new Ship();
 		lives = new Lives();
+		explosion = new Explosion();
 	
 		newLevel();
 		
@@ -67,7 +69,7 @@ public class GameRenderer implements Renderer {
 		lives.numLives = 3;
 		
 		//create a list of asteroids
-		for(int i=0; i < level*3; i++)
+		for(int i=0; i < level*2; i++)
 		{
 			asteroids.add(new Asteroid(2));
 		}
@@ -142,12 +144,29 @@ public class GameRenderer implements Renderer {
 			GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
 			
 			
-			
+			//handle explosions
+			if(explosion.active)
+			{
+				explosion.update();
+				explosion.glDraw(gl);
+			}
+			else
+				player.active = true;
 			
 			// So far all the code we need to get the ship class working...
-			player.setAngle(mAngle);
-			player.update();
-			player.glDraw(gl, player.getPosition(), player.getAngle());
+			if(player.active)
+			{
+				player.setAngle(mAngle);
+				player.update();
+				player.glDraw(gl, player.getPosition(), player.getAngle());
+			}
+			else
+				{
+					player.position.x = 0;
+					player.position.y = 0;
+					player.thrust.x = 0;
+					player.thrust.y = 0;
+				}
 			
 			//player hud (now only displays number of lives) 
 			for(int i = 0; i < lives.numLives; i++)
@@ -164,9 +183,8 @@ public class GameRenderer implements Renderer {
 					stillAsteroids = true;
 					
 					//check for collisions 
-					if(player.collidesWith(asteroid))
+					if(player.collidesWith(asteroid) && player.active)
 					{
-						asteroid.active = false;
 						playerDie();
 					}
 				}
@@ -240,10 +258,14 @@ public class GameRenderer implements Renderer {
 	public void playerDie()
 	{
 		lives.numLives--;
-		player.position.x = 0;
-		player.position.y = 0;
-		player.thrust.x = 0;
-		player.thrust.y = 0;
+		
+		//create an explosion
+		player.active = false;
+		explosion.active = true;
+		explosion.position.x = player.position.x;
+		explosion.position.y = player.position.y;
+		explosion.scale = 0;
+		explosion.startTime = System.currentTimeMillis();
 		
 		if(lives.numLives <= 0)
 			STATE = GameState.GAME_OVER;
@@ -253,34 +275,37 @@ public class GameRenderer implements Renderer {
 	//handle creating or reusing player bullets
 	public void playerShoot()
 	{
-		if(!isIterating)
-		{	
-			boolean createNew = true;
-			for(Bullet bullet : bullets)
-			{
-				if(bullet.active == false)
+		if(player.active)
+		{
+			if(!isIterating)
+			{	
+				boolean createNew = true;
+				for(Bullet bullet : bullets)
 				{
-					createNew = false;
-					bullet.position.x = player.position.x;
-					bullet.position.y = player.position.y;
-					bullet.active = true;
-					bullet.angle = (float) (mAngle - Math.PI/2);
-					bullet.setThrust();
-					bullet.startTime = System.currentTimeMillis();
-					break;
-					
+					if(bullet.active == false)
+					{
+						createNew = false;
+						bullet.position.x = player.position.x;
+						bullet.position.y = player.position.y;
+						bullet.active = true;
+						bullet.angle = (float) (mAngle - Math.PI/2);
+						bullet.setThrust();
+						bullet.startTime = System.currentTimeMillis();
+						break;
+						
+					}
+				}
+				
+				//If there are no inactive bullets, create a new one.
+				if(createNew)
+				{
+					bullets.add(new Bullet(player.position.x, player.position.y, mAngle));
+					System.out.println("created bullet");
 				}
 			}
-			
-			//If there are no inactive bullets, create a new one.
-			if(createNew)
-			{
-				bullets.add(new Bullet(player.position.x, player.position.y, mAngle));
-				System.out.println("created bullet");
-			}
+			else
+				bulletWaiting = true;
 		}
-		else
-			bulletWaiting = true;
 	}
 	
 

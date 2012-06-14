@@ -8,7 +8,7 @@ public class Bullet extends Drawable implements Flyable {
 	public Vector2f thrust = new Vector2f(0.00001f, 0.00001f);
 	protected float angle;
 	public boolean active = true;
-	private float SPEED = 5.0f;
+	private float SPEED = 10.0f;
 	public long startTime;
 	public float radius = 0.1f;
 	
@@ -35,7 +35,7 @@ public class Bullet extends Drawable implements Flyable {
 		//check whether to make the bullet inactive
 		long currentTime = System.currentTimeMillis();
 		
-		if(currentTime - startTime > 5000)
+		if(currentTime - startTime > 1000)
 			active = false;
 		
 		

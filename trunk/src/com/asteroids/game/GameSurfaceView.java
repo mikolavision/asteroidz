@@ -55,6 +55,7 @@ public class GameSurfaceView extends GLSurfaceView{
 		
 		//Initialize media player
 		mediaPlayer = MediaPlayer.create(context, R.raw.music);
+		mediaPlayer.setLooping(true);
 		mediaPlayer.start();
     
 	    // register the accelerometer so we can retrieve values
