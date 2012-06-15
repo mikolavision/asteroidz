@@ -30,7 +30,7 @@ public class Explosion extends Drawable {
 	{
 		
 		angle += 10;
-		scale += 0.01f;
+		scale += 0.05f;
 		
 		//let the explosion last for 3 seconds
 		if(System.currentTimeMillis() - startTime > 2000)
