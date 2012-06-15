@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.microedition.khronos.egl.EGLConfig;
 import javax.microedition.khronos.opengles.GL10;
 
+import android.content.Context;
 import android.opengl.GLU;
 import android.opengl.GLSurfaceView.Renderer;
 import android.view.MotionEvent;
@@ -35,6 +36,13 @@ public class GameRenderer implements Renderer {
 	
 	private FloatBuffer triangleVB;
 	private FloatBuffer starVB;
+	public Context context;
+	private SoundManager mSoundManager;
+	
+	public GameRenderer(Context aContext)
+	{
+		context = aContext;
+	}
 	
 	public void onSurfaceCreated(GL10 gl, EGLConfig config) {
 		//Set the background frame color
@@ -54,6 +62,12 @@ public class GameRenderer implements Renderer {
 		player = new Ship();
 		lives = new Lives();
 		explosion = new Explosion();
+		
+		//Initialize sound
+		mSoundManager = new SoundManager();
+		mSoundManager.initSounds(context);
+		mSoundManager.addSound(1, R.raw.fire);
+		mSoundManager.addSound(2, R.raw.explosion); 
 	
 		newLevel();
 		
@@ -78,7 +92,6 @@ public class GameRenderer implements Renderer {
 		
 	}
 	
-
 
 	public void onDrawFrame(GL10 gl) {
 		
@@ -222,6 +235,8 @@ public class GameRenderer implements Renderer {
 								asteroidsWaiting.add(new Asteroid(1,asteroid.position.x, asteroid.position.y));
 								asteroidsWaiting.add(new Asteroid(1,asteroid.position.x, asteroid.position.y));
 							}
+							
+							mSoundManager.playSound(2);
 						}
 					
 					bullet.glDraw(gl, bullet.position, bullet.getAngle());	
@@ -305,6 +320,8 @@ public class GameRenderer implements Renderer {
 			}
 			else
 				bulletWaiting = true;
+			
+			mSoundManager.playSound(1);
 		}
 	}
 	

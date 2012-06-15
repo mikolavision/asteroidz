@@ -25,7 +25,6 @@ public class GameSurfaceView extends GLSurfaceView{
     private float mAccelY = 0;
     
     private MediaPlayer mediaPlayer;
-    private SoundManager mSoundManager;
     
     private final SensorEventListener accelerometerSensor = new SensorEventListener() {
 		
@@ -47,11 +46,7 @@ public class GameSurfaceView extends GLSurfaceView{
 	public GameSurfaceView(Context context, Activity activity) {
 		super(context);
 		
-		//Initialize sound
-		mSoundManager = new SoundManager();
-		mSoundManager.initSounds(context);
-		mSoundManager.addSound(1, R.raw.fire);
-		mSoundManager.addSound(2, R.raw.music);
+
 		
 		//Initialize media player
 		mediaPlayer = MediaPlayer.create(context, R.raw.music);
@@ -66,7 +61,7 @@ public class GameSurfaceView extends GLSurfaceView{
 	    //mRenderer.SCREEN_HEIGHT = display.getWidth();
 	    //mRenderer.SCREEN_WIDTH = display.getHeight();
 	    
-		mRenderer = new GameRenderer();
+		mRenderer = new GameRenderer(context);
 		setRenderer(mRenderer);
 		
 		// Set the Renderer for drawing on the GLSurfaceView
@@ -119,7 +114,6 @@ public class GameSurfaceView extends GLSurfaceView{
 		    	 switch (e.getAction()) {
 	 		 		case MotionEvent.ACTION_DOWN:
 	 		 		mRenderer.playerShoot();
-	 		 		mSoundManager.playSound(1);
 	 		 		break;
 		    	 }
 		    	 
