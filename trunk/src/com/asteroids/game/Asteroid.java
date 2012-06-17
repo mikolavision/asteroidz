@@ -17,7 +17,7 @@ public class Asteroid extends Drawable implements Flyable {
 	public int size = 2;
 	public float SPEED = 0.3f;
 	
-	//For new Asteroids created at the beggining of the game (includes random spawn)
+	//For new Asteroids created at the beginning of the game (includes random spawn)
 	public Asteroid(int aSize){
 		super();
 		size = aSize;

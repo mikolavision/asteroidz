@@ -5,6 +5,8 @@ import java.nio.FloatBuffer;
 import javax.microedition.khronos.opengles.GL10;
 
 public class Title extends Drawable{
+	
+	int t;
 
 	private FloatBuffer fb_a;
 	private FloatBuffer fb_s;
@@ -16,12 +18,31 @@ public class Title extends Drawable{
 	private FloatBuffer fb_d;
 	private FloatBuffer fb_z;
 	
+	private Vector2f[] newA;
+	private Vector2f[] random;
+	
 	public Title(){
-		
+		t = 0;
+		random = new Vector2f[9];
+		for(int i=0;i<3;i++)
+			for(int j=0;j<3;j++)
+				
+		newA = new Vector2f[2];
+		newA[0] = new Vector2f(0.0f, 0.5f);
+		newA[1] = new Vector2f(0.0f, 0.5f);
+		createLetters();
+	}
+	
+	public void updateLetters(int t){
+		this.t = t;
+	}
+	
+	public void createLetters(){
 		float[] _a = {
 				0.5f, 0.0f, 0.0f,
 				0.0f, 0.5f, 0.0f,
-				0.0f, 0.0f, 0.0f
+				0.0f, 0.0f, 0.0f,
+				0.0f, 0.5f, 0.0f
 		};
 		float[] _s = {
 				0.5f, 0.0f, 0.0f,
@@ -93,7 +114,7 @@ public class Title extends Drawable{
 		fb_d = createBuffer(_d);
 		fb_z = createBuffer(_z);
 	}
-	
+		
 	@Override
 	public void glDraw(GL10 gl, float x, float y){
 		
@@ -101,11 +122,14 @@ public class Title extends Drawable{
 
 		gl.glPushMatrix();
 		gl.glTranslatef(x, y, 0.0f);
+
+		gl.glScalef(1.0f + (float)Math.cos(t*.1f)*.03f, 1.0f + (float)Math.cos(t*.1f)*.03f, 1.0f);
+		
 		//A
 		gl.glPushMatrix();
 		gl.glTranslatef(2.4f, 0.5f, 0.0f);
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fb_a);
-		gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, 3);
+		gl.glDrawArrays(GL10.GL_LINES, 0, 4);
 		gl.glPopMatrix();
 		
 		//S
@@ -163,6 +187,7 @@ public class Title extends Drawable{
 		gl.glVertexPointer(3, GL10.GL_FLOAT, 0, fb_z);
 		gl.glDrawArrays(GL10.GL_LINE_STRIP, 0, 4);
 		gl.glPopMatrix();
+		
 		
 		gl.glPopMatrix();
 	}

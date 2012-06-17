@@ -22,6 +22,7 @@ public class GameRenderer implements Renderer {
 	public int level = 1;
 	
 	//Main Menu
+	public static int t;
 	public static GameState STATE = GameState.MAIN_MENU;
 	public Button playButton;	
 	public Title title;
@@ -50,6 +51,7 @@ public class GameRenderer implements Renderer {
 
 		STATE = GameState.MAIN_MENU;
 		initializeMenu();
+		t = 0;
 		
 		gl.glEnableClientState(GL10.GL_VERTEX_ARRAY);
 		
@@ -94,7 +96,7 @@ public class GameRenderer implements Renderer {
 	
 
 	public void onDrawFrame(GL10 gl) {
-		
+		System.out.println(STATE);
 		
 		switch(STATE){
 			
@@ -109,6 +111,8 @@ public class GameRenderer implements Renderer {
 			
 			//When using GL_MODELVIEW, you must set the view point
 			GLU.gluLookAt(gl, 0, 0, -5, 0f, 0f, 0f, 0f, 1.0f, 0.0f);
+			
+			title.updateLetters(t);
 			
 			//Draw objects
 			title.glDraw(gl, -0.2f, 0.0f);
@@ -137,7 +141,7 @@ public class GameRenderer implements Renderer {
 			break;//GAME_OVER
 			
 		case INITIALIZE:
-
+			t = 0;
 			initShapes();
 			intitialize();
 			
@@ -265,7 +269,9 @@ public class GameRenderer implements Renderer {
 			break;//default
 			
 		}
-		
+
+		System.out.println(t%60);
+		t++;
 	}
 	
 	
