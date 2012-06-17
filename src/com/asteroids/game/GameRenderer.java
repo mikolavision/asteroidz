@@ -176,6 +176,9 @@ public class GameRenderer implements Renderer {
 				player.setAngle(mAngle);
 				player.update();
 				player.glDraw(gl, player.getPosition(), player.getAngle());
+				
+				
+				
 			}
 			else
 				{
@@ -184,10 +187,13 @@ public class GameRenderer implements Renderer {
 					player.thrust.x = 0;
 					player.thrust.y = 0;
 				}
-			
+
 			//player hud (now only displays number of lives) 
 			for(int i = 0; i < lives.numLives; i++)
 			lives.glDraw(gl, (float) (2 - 0.2*i), 1.3f, 0.0f);
+			
+			// Testing first person mode
+			//gl.glRotatef(mAngle, 0, 0, 1);
 			
 			//update the asteroids and check if there are still active asteroids
 			boolean stillAsteroids = false;
@@ -210,6 +216,7 @@ public class GameRenderer implements Renderer {
 				
 				
 			}
+			
 			
 			//If there are no more active asteroids, start the next level
 			if(!stillAsteroids)
